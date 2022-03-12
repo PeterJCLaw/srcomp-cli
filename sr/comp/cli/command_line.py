@@ -21,6 +21,7 @@ from . import (
     schedule_league,
     scorer,
     shift_matches,
+    show_match_scores,
     show_schedule,
     summary,
     top_match_points,
@@ -62,6 +63,7 @@ def argument_parser() -> argparse.ArgumentParser:
     schedule_league.add_subparser(subparsers)
     scorer.add_subparser(subparsers)
     shift_matches.add_subparser(subparsers)
+    show_match_scores.add_subparser(subparsers)
     show_schedule.add_subparser(subparsers)
     summary.add_subparser(subparsers)
     top_match_points.add_subparser(subparsers)
