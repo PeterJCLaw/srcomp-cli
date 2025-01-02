@@ -27,7 +27,10 @@ setup(
         'sr.comp >=1.8, <2',
         'reportlab >=3.1.44, <5',
         'requests >=2.5.1, <3',
-        'ruamel.yaml >=0.15, <1.0',
+        # Work around https://sourceforge.net/p/ruamel-yaml/tickets/534/, where
+        # number-zero (0) keys don't round trip under YAML 1.1, by avoiding
+        # 0.18.x until that's fixed.
+        'ruamel.yaml >=0.15, <0.18.7, <1.0',
         'mido >=1.1, <2',
         'tabulate >=0.8.9, <0.10',
     ],
