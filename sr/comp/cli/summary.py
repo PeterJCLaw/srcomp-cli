@@ -6,6 +6,8 @@ from collections import Counter
 from collections.abc import Iterable, Mapping
 from typing import TypeVar
 
+from sr.comp.match_period import MatchPeriod
+
 T = TypeVar('T')
 
 
@@ -23,6 +25,24 @@ def format_duration(delta: datetime.timedelta) -> str:
     if seconds.is_integer():
         seconds = int(seconds)
     return f'{seconds}s'
+
+
+def format_period(period: MatchPeriod, match_duration: datetime.timedelta) -> str:
+    fmt = '%H:%M'
+
+    if period.matches:
+        last_match = first(period.matches[-1].values())
+        last_match_end = f"matches end {last_match.end_time:{fmt}}"
+    else:
+        last_match_end = "[no matches]"
+
+    date = period.start_time.date()
+    desc = period.description
+
+    max_end_time = period.max_end_time + match_duration
+    timings = f"{period.start_time:{fmt}}–{max_end_time:{fmt}}, {last_match_end}"
+
+    return f"{date} {desc} ({timings})"
 
 
 def command(args: argparse.Namespace) -> None:
@@ -68,13 +88,18 @@ def command(args: argparse.Namespace) -> None:
     ))
 
     durations: Mapping[str, datetime.timedelta] = comp.schedule.match_slot_lengths
+    match_duration = durations['total']
 
     print("Match duration: {} (pre: {}, match: {}, post: {})".format(
-        format_duration(durations['total']),
+        format_duration(match_duration),
         format_duration(durations['pre']),
         format_duration(durations['post']),
         format_duration(durations['match']),
     ))
+
+    print("Match periods:")
+    for period in comp.schedule.match_periods:
+        print(f' · {format_period(period, match_duration)}')
 
 
 def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
