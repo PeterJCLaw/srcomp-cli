@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import datetime
+from collections.abc import Mapping
 
 
 def first(iterable):
@@ -10,6 +12,13 @@ def first(iterable):
 def counter_to_string(cntr):
     string = ", ".join("{1} {0}".format(*item) for item in cntr.items())
     return string
+
+
+def format_duration(delta: datetime.timedelta) -> str:
+    seconds = delta.total_seconds()
+    if seconds.is_integer():
+        seconds = int(seconds)
+    return f'{seconds}s'
 
 
 def command(args: argparse.Namespace) -> None:
@@ -52,6 +61,15 @@ def command(args: argparse.Namespace) -> None:
     print("Number of games: {} ({})".format(
         sum(games_by_type.values()),
         games_by_type_str,
+    ))
+
+    durations: Mapping[str, datetime.timedelta] = comp.schedule.match_slot_lengths
+
+    print("Match duration: {} (pre: {}, match: {}, post: {})".format(
+        format_duration(durations['total']),
+        format_duration(durations['pre']),
+        format_duration(durations['post']),
+        format_duration(durations['match']),
     ))
 
 
