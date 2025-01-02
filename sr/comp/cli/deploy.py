@@ -28,7 +28,15 @@ import sys
 import textwrap
 import warnings
 from contextlib import contextmanager
-from typing import Any, cast, Iterable, Iterator, Sequence, TYPE_CHECKING
+from typing import (
+    Any,
+    cast,
+    Iterable,
+    Iterator,
+    Sequence,
+    TextIO,
+    TYPE_CHECKING,
+)
 
 if TYPE_CHECKING:
     from sr.comp.raw_compstate import RawCompstate
@@ -59,7 +67,7 @@ def exit_on_exception(
 
 
 @contextmanager
-def guard_unicode_output(stream):
+def guard_unicode_output(stream: TextIO) -> Iterator[None]:
     """
     Cope with users environments not being able to handle unicode by softening
     the display of characters they can't handle.
@@ -86,15 +94,15 @@ def guard_unicode_output(stream):
 
     orig_write = stream.write
 
-    def write(text, *a, **k):
+    def write(text: str, *a: object, **k: object) -> None:
         text = text.encode(encoding, errors='backslashreplace').decode(encoding)
         orig_write(text, *a, **k)
 
     try:
-        stream.write = write
+        stream.write = write  # type: ignore[method-assign, assignment]
         yield
     finally:
-        stream.write = orig_write
+        stream.write = orig_write  # type: ignore[method-assign]
 
 
 def print_fail(*args: object, **kargs: Any) -> None:
