@@ -2,14 +2,18 @@ from __future__ import annotations
 
 import argparse
 import datetime
-from collections.abc import Mapping
+from collections import Counter
+from collections.abc import Iterable, Mapping
+from typing import TypeVar
+
+T = TypeVar('T')
 
 
-def first(iterable):
+def first(iterable: Iterable[T]) -> T:
     return next(i for i in iterable)
 
 
-def counter_to_string(cntr):
+def counter_to_string(cntr: Counter[T]) -> str:
     string = ", ".join("{1} {0}".format(*item) for item in cntr.items())
     return string
 
