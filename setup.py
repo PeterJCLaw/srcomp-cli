@@ -22,8 +22,8 @@ setup(
     author_email='srobo-devel@googlegroups.com',
     install_requires=[
         'python-dateutil >=2.2, <3',
-        'Fabric >= 2.7, <3',
-        'invoke >= 1.7, <2',
+        'Fabric >= 2.7, <4',
+        'invoke >= 1.7, <3',
         'sr.comp >=1.8, <2',
         'reportlab >=3.1.44, <5',
         'requests >=2.5.1, <3',
