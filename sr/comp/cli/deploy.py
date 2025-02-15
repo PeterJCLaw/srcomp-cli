@@ -49,9 +49,8 @@ OKBLUE = '\033[94m'
 ENDC = '\033[0m'
 
 
-def format_fail(*args: object) -> str:
-    msg = " ".join(map(str, args))
-    return BOLD + FAIL + msg + ENDC
+def format_fail(message: str) -> str:
+    return BOLD + FAIL + message + ENDC
 
 
 @contextmanager
@@ -105,8 +104,8 @@ def guard_unicode_output(stream: TextIO) -> Iterator[None]:
         stream.write = orig_write  # type: ignore[method-assign]
 
 
-def print_fail(*args: object, **kargs: Any) -> None:
-    print(format_fail(*args), **kargs)
+def print_fail(message: str, **kargs: Any) -> None:
+    print(format_fail(message), **kargs)
 
 
 def print_buffer(buf: io.StringIO) -> None:
@@ -290,7 +289,7 @@ def check_host_state(compstate: RawCompstate, host: str, revision: str, verbose:
 def require_no_changes(compstate: RawCompstate) -> None:
     if compstate.has_changes:
         print_fail(
-            "Cannot deploy state with local changes.",
+            "Cannot deploy state with local changes. "
             "Commit or remove them and re-run.",
         )
         compstate.show_changes()
