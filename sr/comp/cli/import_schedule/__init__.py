@@ -110,6 +110,7 @@ def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    # Changing this? Also update the reference to this argument in `build_schedule` in core.py
     parser.add_argument(
         '-i',
         '--ignore-ids',

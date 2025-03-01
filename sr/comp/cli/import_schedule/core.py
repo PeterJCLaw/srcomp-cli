@@ -188,6 +188,19 @@ def build_schedule(
     if ids_to_ignore:
         ignore_ids(ids, ids_to_ignore)
 
+    # Quality/intent checks
+    if len(ids) > config.num_teams:
+        print(
+            f"Warning: more places than teams ({len(ids)} places, {config.num_teams} teams). "
+            "Heuristics will be used to attempt to minimise the number of empty "
+            "spaces in matches when mapping teams to places.",
+        )
+        if not ids_to_ignore:
+            print(
+                "Consider using `--ignore-ids` to indicate which ids should be "
+                "ignored if the default logic does not choose the right ones.",
+            )
+
     # Sanity checks
     if len(ids) < config.num_teams:
         raise ValueError(
