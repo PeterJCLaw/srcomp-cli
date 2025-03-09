@@ -9,7 +9,9 @@ from schedule-generating tooling is to use integers.
 
 The total number of identifiers in the file should be equal to or greater
 than the number of teams in the compstate. In the latter case, `--ignore-ids`
-can optionally be used to indicate explicitly which to ignore.
+can optionally be used to indicate explicitly which to ignore. This can be
+useful when the number of teams does not evenly divide into the number of
+entrants in match.
 
 The number of identifiers in a given match must be a multiple of the
 number of teams per game (currently 4), up to the number of arenas in
