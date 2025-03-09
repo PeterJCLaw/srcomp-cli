@@ -4,8 +4,12 @@ Import a league.yaml from a schedule file.
 A schedule file specifies matches one-per-line, as follows:
 
 A 'match' consists of a number of unique identifiers separated by pipe
-characters. The total number of identifiers in the file should be equal
-to or greater than the number of teams in the compstate.
+characters. Identifiers are arbitrary strings, though a common pattern
+from schedule-generating tooling is to use integers.
+
+The total number of identifiers in the file should be equal to or greater
+than the number of teams in the compstate. In the latter case, `--ignore-ids`
+can optionally be used to indicate explicitly which to ignore.
 
 The number of identifiers in a given match must be a multiple of the
 number of teams per game (currently 4), up to the number of arenas in
@@ -110,12 +114,18 @@ def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    # Changing this? Also update the reference to this argument in `build_schedule` in core.py
+    # Changing this? Also update the reference to this argument in
+    # `build_schedule` in core.py and in the docstring for this module.
     parser.add_argument(
         '-i',
         '--ignore-ids',
         type=loading.parse_ids,
-        help="Comma separated list of ids (as present in the schedule file) to ignore.",
+        help=(
+            "Comma separated list of ids (as present in the schedule file) to ignore. "
+            "Where this is not provided and the number of ids is greater than "
+            "the number of teams, heuristics will be used to determine which ids "
+            "are assigned teams."
+        ),
     )
     parser.add_argument(
         '--extend',
