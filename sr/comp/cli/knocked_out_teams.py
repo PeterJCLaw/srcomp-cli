@@ -26,6 +26,15 @@ class Round:
     early rounds.
     """
 
+    teams_out: frozenset[TLA]
+    """
+    Teams knocked out by the prior round's matches.
+
+    This will include teams whose matches in the prior round have not been
+    scored. Callers should check `prior_rounds_complete` to understand the state
+    of the scoring.
+    """
+
     prior_rounds_complete: bool
     """
     Whether the scoring for all the matches prior to ths round has completed and
@@ -50,24 +59,30 @@ def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
 
     rounds = comp.schedule.knockout_rounds
 
+    teams_last_round: frozenset[TLA] = frozenset()
+
     last_round_num = len(rounds) - 1
     for i, matches in enumerate(rounds):
         teams_this_round = teams_from_matches(matches)
         teams_remaining = teams_from_matches(itertools.chain(*rounds[i:]))
+
+        teams_out = teams_last_round - teams_remaining
 
         yield Round(
             i,
             round_name(last_round_num - i),
             teams_this_round,
             teams_remaining,
+            teams_out,
             prior_rounds_complete=UNKNOWABLE_TEAM not in teams_this_round,
         )
+
+        teams_last_round = teams_this_round
 
 
 def command(settings: argparse.Namespace) -> None:
     comp = SRComp(settings.compstate)
 
-    teams_last_round: frozenset[TLA] = frozenset()
     for round_info in teams_and_rounds(comp):
         print(f"## Teams not in round {round_info.number} ({round_info.name})")
         print()
@@ -85,11 +100,9 @@ def command(settings: argparse.Namespace) -> None:
             if not settings.force:
                 return
 
-        teams_out = teams_last_round - round_info.teams_remaining
-        for tla in sorted(teams_out):
+        for tla in sorted(round_info.teams_out):
             print(tla, comp.teams[tla].name)
 
-        teams_last_round = round_info.teams_this_round
         print()
 
 
