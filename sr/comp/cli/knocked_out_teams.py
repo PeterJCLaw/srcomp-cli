@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import itertools
 from pathlib import Path
-from typing import Iterator
+from typing import Iterable, Iterator
 
 from sr.comp.comp import SRComp
 from sr.comp.knockout_scheduler import UNKNOWABLE_TEAM
+from sr.comp.match_period import Match
 from sr.comp.types import TLA
 
 
@@ -15,6 +17,14 @@ class Round:
     number: int
     name: str
     teams_this_round: frozenset[TLA | None]
+
+    teams_remaining: frozenset[TLA]
+    """
+    Teams known to be in this or future rounds.
+
+    This is needed to cope with knockout structures where some seeds bypass
+    early rounds.
+    """
 
     prior_rounds_complete: bool
     """
@@ -34,18 +44,21 @@ def round_name(rounds_left: int) -> str:
 
 
 def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
+    def teams_from_matches(matches: Iterable[Match]) -> set[TLA | None]:
+        return set(itertools.chain.from_iterable(x.teams for x in matches))
+
     rounds = comp.schedule.knockout_rounds
 
     last_round_num = len(rounds) - 1
     for i, matches in enumerate(rounds):
-        teams_this_round = set()
-        for game in matches:
-            teams_this_round.update(game.teams)
+        teams_this_round = teams_from_matches(matches)
+        teams_remaining = teams_from_matches(itertools.chain(*rounds[i:]))
 
         yield Round(
             i,
             round_name(last_round_num - i),
             frozenset(teams_this_round),
+            frozenset(x for x in teams_remaining if x is not None),
             prior_rounds_complete=UNKNOWABLE_TEAM not in teams_this_round,
         )
 
@@ -71,7 +84,7 @@ def command(settings: argparse.Namespace) -> None:
             if not settings.force:
                 return
 
-        out = teams_last_round - round_info.teams_this_round
+        out = teams_last_round - round_info.teams_remaining
         teams_out = [t for t in out if t is not None]
         for tla in sorted(teams_out):
             print(tla, comp.teams[tla].name)
