@@ -16,7 +16,7 @@ from sr.comp.types import TLA
 class Round:
     number: int
     name: str
-    teams_this_round: frozenset[TLA | None]
+    teams_this_round: frozenset[TLA]
 
     teams_remaining: frozenset[TLA]
     """
@@ -44,8 +44,9 @@ def round_name(rounds_left: int) -> str:
 
 
 def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
-    def teams_from_matches(matches: Iterable[Match]) -> set[TLA | None]:
-        return set(itertools.chain.from_iterable(x.teams for x in matches))
+    def teams_from_matches(matches: Iterable[Match]) -> frozenset[TLA]:
+        teams = set(itertools.chain.from_iterable(x.teams for x in matches))
+        return frozenset(x for x in teams if x is not None)
 
     rounds = comp.schedule.knockout_rounds
 
@@ -57,8 +58,8 @@ def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
         yield Round(
             i,
             round_name(last_round_num - i),
-            frozenset(teams_this_round),
-            frozenset(x for x in teams_remaining if x is not None),
+            teams_this_round,
+            teams_remaining,
             prior_rounds_complete=UNKNOWABLE_TEAM not in teams_this_round,
         )
 
@@ -66,7 +67,7 @@ def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
 def command(settings: argparse.Namespace) -> None:
     comp = SRComp(settings.compstate)
 
-    teams_last_round: frozenset[TLA | None] = frozenset()
+    teams_last_round: frozenset[TLA] = frozenset()
     for round_info in teams_and_rounds(comp):
         print(f"## Teams not in round {round_info.number} ({round_info.name})")
         print()
@@ -84,8 +85,7 @@ def command(settings: argparse.Namespace) -> None:
             if not settings.force:
                 return
 
-        out = teams_last_round - round_info.teams_remaining
-        teams_out = [t for t in out if t is not None]
+        teams_out = teams_last_round - round_info.teams_remaining
         for tla in sorted(teams_out):
             print(tla, comp.teams[tla].name)
 
