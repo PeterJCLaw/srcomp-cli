@@ -47,7 +47,7 @@ def command(settings: argparse.Namespace) -> None:
 
         out = teams_last_round - teams_this_round
         teams_out = [t for t in out if t is not None]
-        for tla in teams_out:
+        for tla in sorted(teams_out):
             print(tla, comp.teams[tla].name)
 
         teams_last_round = teams_this_round
