@@ -101,6 +101,8 @@ def command(args: argparse.Namespace) -> None:
     for period in comp.schedule.match_periods:
         print(f' · {format_period(period, match_duration)}')
 
+    print("Last scored match: {}".format(comp.scores.last_scored_match))
+
 
 def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
     help_msg = "Show summary data about a compstate."
