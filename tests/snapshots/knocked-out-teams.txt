@@ -1,10 +1,15 @@
-Teams not in round 0 ()
+## Teams not in round 0 ()
 
-Teams not in round 1 ()
 
-Teams not in round 2 (Quarter Finals)
+## Teams not in round 1 ()
 
-Teams not in round 3 (Semi Finals)
 
-Teams not in round 4 (Finals)
+## Teams not in round 2 (Quarter Finals)
+
+
+## Teams not in round 3 (Semi Finals)
+
+
+## Teams not in round 4 (Finals)
+
 

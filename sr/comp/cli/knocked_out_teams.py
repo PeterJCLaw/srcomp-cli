@@ -28,7 +28,8 @@ def command(settings: argparse.Namespace) -> None:
         for game in matches:
             teams_this_round.update(game.teams)
 
-        print(f"Teams not in round {i} ({round_name(last_round_num - i)})")
+        print(f"## Teams not in round {i} ({round_name(last_round_num - i)})")
+        print()
         out = teams_last_round - teams_this_round
         teams_out = [t for t in out if t is not None]
         for tla in teams_out:
