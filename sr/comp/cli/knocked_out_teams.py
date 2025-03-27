@@ -9,7 +9,7 @@ from typing import Iterable, Iterator
 from sr.comp.comp import SRComp
 from sr.comp.knockout_scheduler import UNKNOWABLE_TEAM
 from sr.comp.match_period import Match
-from sr.comp.types import TLA
+from sr.comp.types import MatchNumber, TLA
 
 
 @dataclasses.dataclass(frozen=True)
@@ -59,7 +59,15 @@ def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
 
     rounds = comp.schedule.knockout_rounds
 
-    teams_last_round: frozenset[TLA] = frozenset()
+    # Teams at the end of the league. Note that this doesn't include teams which
+    # have dropped out of their own accord by that point.
+    first_knockouts_match = MatchNumber(comp.schedule.n_league_matches)
+    teams_last_round: frozenset[TLA]
+    teams_last_round = frozenset(
+        tla
+        for tla, team in comp.teams.items()
+        if team.is_still_around(first_knockouts_match)
+    )
 
     last_round_num = len(rounds) - 1
     for i, matches in enumerate(rounds):
