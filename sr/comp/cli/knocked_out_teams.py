@@ -18,6 +18,7 @@ def round_name(rounds_left: int) -> str:
 
 def command(settings: argparse.Namespace) -> None:
     from sr.comp.comp import SRComp
+    from sr.comp.knockout_scheduler import UNKNOWABLE_TEAM
 
     comp = SRComp(settings.compstate)
 
@@ -30,10 +31,25 @@ def command(settings: argparse.Namespace) -> None:
 
         print(f"## Teams not in round {i} ({round_name(last_round_num - i)})")
         print()
+
+        if UNKNOWABLE_TEAM in teams_this_round:
+            if settings.force:
+                print("Warning: ", end='')
+
+            print(
+                "Prior rounds are not yet fully scored, knocked-out teams this "
+                "round are not yet confirmed.",
+            )
+            print()
+
+            if not settings.force:
+                return
+
         out = teams_last_round - teams_this_round
         teams_out = [t for t in out if t is not None]
         for tla in teams_out:
             print(tla, comp.teams[tla].name)
+
         teams_last_round = teams_this_round
         print()
 
@@ -49,5 +65,11 @@ def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser
         'compstate',
         help="competition state repository",
         type=Path,
+    )
+    parser.add_argument(
+        '--force',
+        help="Show knockouts even for incompletely scored rounds.",
+        action='store_true',
+        default=False,
     )
     parser.set_defaults(func=command)
