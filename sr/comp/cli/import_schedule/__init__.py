@@ -82,17 +82,17 @@ def command(args: argparse.Namespace) -> None:
         schedule_lines = loading.tidy(sfp.readlines())
 
     league_yaml = loading.league_yaml_path(args.compstate)
-    existing_matches: dict[MatchNumber, RawMatch] = {}
+    matches: dict[MatchNumber, RawMatch] = {}
     if args.extend:
-        existing_matches = loading.load_league_yaml(league_yaml)
+        matches = loading.load_league_yaml(league_yaml)
 
     config = get_configuration(
         args.compstate,
         args.team_order_strategy,
-        existing_matches.keys(),
+        matches.keys(),
     )
 
-    matches, bad_matches = core.build_schedule(
+    new_matches, bad_matches = core.build_schedule(
         config,
         schedule_lines,
         args.ignore_ids,
@@ -105,8 +105,12 @@ def command(args: argparse.Namespace) -> None:
             f"{bad_match.num_teams} teams.",
         )
 
+    # Note: make sure to update in-place and then save back using the same
+    # mapping as was loaded to preserve any comments in the YAML.
+    matches.update(new_matches)
+
     # Save the matches to the file
-    loading.dump_league_yaml({**existing_matches, **matches}, league_yaml)
+    loading.dump_league_yaml(matches, league_yaml)
 
 
 def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
