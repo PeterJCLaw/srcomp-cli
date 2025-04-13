@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import collections
 import dataclasses
 import itertools
 from pathlib import Path
 from typing import Iterable, Iterator
 
 from sr.comp.comp import SRComp
-from sr.comp.knockout_scheduler import UNKNOWABLE_TEAM
 from sr.comp.match_period import Match
 from sr.comp.types import MatchNumber, TLA
 
@@ -41,6 +41,12 @@ class Round:
     thus the knockouts for this round are completely known.
     """
 
+    this_round_complete: bool
+    """
+    Whether the scoring for all the matches up to and including ths round have
+    completed and thus the knockouts for this round are completely known.
+    """
+
 
 def round_name(rounds_left: int) -> str:
     if rounds_left == 0:
@@ -69,23 +75,42 @@ def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
         if team.is_still_around(first_knockouts_match)
     )
 
+    teams_with_future_matches = teams_from_matches(
+        itertools.chain.from_iterable(
+            (
+                x.values()
+                for x in comp.schedule.matches[comp.scores.last_scored_match + 1:]
+            ),
+        ),
+    )
+
+    all_teams_out = comp.teams.keys() - teams_with_future_matches
+
+    last_round_by_team = {}
+
+    for tla in all_teams_out:
+        for i, matches in enumerate(rounds):
+            teams_this_round = teams_from_matches(matches)
+            for tla in teams_this_round & all_teams_out:
+                last_round_by_team[tla] = i
+
+    out_by_round = collections.defaultdict(set)
+    for tla, round_ in last_round_by_team.items():
+        out_by_round[round_].add(tla)
+
     last_round_num = len(rounds) - 1
     for i, matches in enumerate(rounds):
         teams_this_round = teams_from_matches(matches)
-        teams_remaining = teams_from_matches(itertools.chain(*rounds[i:]))
-
-        teams_out = teams_last_round - teams_remaining
-
+        teams_out = frozenset(out_by_round.get(i, ()))
         yield Round(
             i,
             round_name(last_round_num - i),
-            teams_this_round,
-            teams_remaining,
-            teams_out,
-            prior_rounds_complete=UNKNOWABLE_TEAM not in teams_this_round,
+            teams_this_round=teams_this_round,
+            teams_remaining=frozenset(),
+            teams_out=teams_out,
+            prior_rounds_complete=True,
+            this_round_complete=comp.scores.last_scored_match >= max(x.num for x in matches),
         )
-
-        teams_last_round = teams_this_round
 
 
 def command(settings: argparse.Namespace) -> None:
@@ -93,6 +118,7 @@ def command(settings: argparse.Namespace) -> None:
 
     for round_info in teams_and_rounds(comp):
         print(f"## Teams not in round {round_info.number} ({round_info.name})")
+        print("Fully scored" if round_info.this_round_complete else "\nWARNING: Not fully scored")
         print()
 
         if not round_info.prior_rounds_complete:
@@ -106,12 +132,14 @@ def command(settings: argparse.Namespace) -> None:
             print()
 
             if not settings.force:
-                return
+                break
 
         for tla in sorted(round_info.teams_out):
             print(tla, comp.teams[tla].name)
 
         print()
+
+    print(f"Last scored match: {comp.scores.last_scored_match}")
 
 
 def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
