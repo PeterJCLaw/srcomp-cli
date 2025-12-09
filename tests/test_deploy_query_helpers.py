@@ -8,7 +8,7 @@ from sr.comp.cli.deploy import query, query_bool
 
 
 def mock_get_input(autospec: bool = True, **kwargs: Any) -> mock._patch[mock.Mock]:
-    return mock.patch(  # type: ignore[no-any-return]  # somehow the **kwargs confuses mypy
+    return mock.patch(
         'sr.comp.cli.deploy.get_input',
         autospec=autospec,
         **kwargs,
