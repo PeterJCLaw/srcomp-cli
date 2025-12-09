@@ -30,7 +30,7 @@ class SimpleCommandsTests(unittest.TestCase):
         for command_parts in self.SIMPLE_COMMANDS:
             command, *args = command_parts
 
-            with self.subTest(args):
+            with self.subTest(command=command, args=args):
                 result = subprocess.run(
                     ['srcomp', command, str(dummy_compstate), *args],
                     stdout=subprocess.PIPE,
