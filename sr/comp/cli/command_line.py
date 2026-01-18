@@ -14,7 +14,6 @@ from . import (
     for_each_match,
     import_schedule,
     knocked_out_teams,
-    lighting_controller,
     list_midi_ports,
     match_order_teams,
     print_schedule,
@@ -59,7 +58,6 @@ def argument_parser() -> argparse.ArgumentParser:
     import_schedule.add_subparser(subparsers)
     knocked_out_teams.add_subparser(subparsers)
     list_midi_ports.add_subparser(subparsers)
-    lighting_controller.add_subparser(subparsers)
     match_order_teams.add_subparser(subparsers)
     print_schedule.add_subparser(subparsers)
     schedule_league.add_subparser(subparsers)
