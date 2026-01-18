@@ -86,7 +86,7 @@ def get_current_match_start(compstate_path: Path) -> datetime.datetime:
     from sr.comp.comp import SRComp
     compstate = SRComp(compstate_path)
     now = compstate.schedule.datetime_now
-    current_matches = tuple(compstate.schedule.matches_at(now))
+    current_matches = compstate.operations.get_matches_at(now).matches
     if not current_matches:
         raise Exception("Not currently in a match, specify a valid time instead")
 

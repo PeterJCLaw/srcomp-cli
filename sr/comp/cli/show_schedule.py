@@ -24,6 +24,7 @@ def command(settings: argparse.Namespace) -> None:
     from datetime import datetime, timedelta
 
     from sr.comp.comp import SRComp
+    from sr.comp.match_operations import MatchState
 
     comp = SRComp(os.path.realpath(settings.compstate))
 
@@ -31,10 +32,14 @@ def command(settings: argparse.Namespace) -> None:
 
     matches = comp.schedule.matches
     now = datetime.now(comp.timezone)
-    current_matches = list(comp.schedule.matches_at(now))
+    current_matches = comp.operations.get_matches_at(now).matches
 
     if not settings.all:
-        time = now - timedelta(minutes=10)
+        if current_matches:
+            time = min(x.start_time for x in current_matches)
+        else:
+            time = now
+        time -= timedelta(minutes=10)
 
         matches = [
             slot
@@ -93,7 +98,10 @@ def command(settings: argparse.Namespace) -> None:
         print_col(m.display_name.center(DISPLAY_NAME_WIDTH))
 
         if m in current_matches:
-            print(" *")
+            marker = " *"
+            if comp.operations.get_match_state(m, now) == MatchState.HELD:
+                marker += " [held]"
+            print(marker)
         else:
             print()
 
