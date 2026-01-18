@@ -40,8 +40,23 @@ API_TIMEOUT_SECONDS = 3
 DEPLOY_USER = 'srcomp'
 
 
+class FatalDeployError(RuntimeError):
+    """
+    Something went wrong which means that the deploy cannot continue.
+
+    This a marker exception and callsites should handle their own displaying of
+    a suitable error message. The message passed to this exception will not be
+    shown to the user and is intended for logging.
+    """
+
+    def __init__(self, log_message: str, exit_code: int = 1) -> None:
+        super().__init__(log_message, exit_code)
+        self.log_message = log_message
+        self.exit_code = exit_code
+
+
 @contextmanager
-def exit_on_exception(
+def make_fatal(
     interactions: UserInteractions[T],
     msg: str = '{0}',
     kind: type[Exception] = Exception,
@@ -49,9 +64,9 @@ def exit_on_exception(
     try:
         yield
     except kind as e:
-        interactions.show_error(msg.format(e))
-        # TODO(PR): interactions exit?
-        exit(1)
+        msg = msg.format(e)
+        interactions.show_error(msg)
+        raise FatalDeployError(msg, exit_code=1) from e
 
 
 @contextmanager
@@ -95,8 +110,7 @@ def guard_unicode_output(stream: TextIO) -> Iterator[None]:
 
 def query_warn(msg: object, interactions: UserInteractions[T]) -> None:
     if not interactions.query_bool(f"Warning: {msg}. Continue?", False):
-        # TODO(PR): interactions exit?
-        exit(1)
+        raise FatalDeployError(f"User rejected warning {msg}", exit_code=1)
 
 
 def ref_compstate(host: str) -> str:
@@ -127,7 +141,7 @@ def deploy_to(
         # revision exists in the target, since this push will simply no-op
         # if it's already present
         revspec = '{0}:refs/heads/deploy-{0}'.format(revision)
-        with exit_on_exception(interactions, kind=RuntimeError):
+        with make_fatal(interactions, kind=RuntimeError):
             compstate.push(
                 url,
                 revspec,
@@ -152,7 +166,7 @@ def deploy_to(
 
 
 def get_deployments(compstate: RawCompstate, interactions: UserInteractions[T]) -> list[str]:
-    with exit_on_exception(interactions, "Failed to get deployments from state ({0})."):
+    with make_fatal(interactions, "Failed to get deployments from state ({0})."):
         return compstate.deployments
 
 
@@ -246,14 +260,13 @@ def require_no_changes(compstate: RawCompstate, interactions: UserInteractions[T
         interactions.show_info(
             compstate.git(['status'], return_output=True),
         )
-        # TODO(PR): interactions exit?
-        exit(1)
+        raise FatalDeployError("Unexpected state changes present", exit_code=1)
 
 
 def require_valid(compstate: RawCompstate, interactions: UserInteractions[T]) -> None:
     from sr.comp.validation import validate
 
-    with exit_on_exception(interactions, "State cannot be loaded: {0}"):
+    with make_fatal(interactions, "State cannot be loaded: {0}"):
         comp = compstate.load()
 
     num_errors = validate(comp)
@@ -278,9 +291,9 @@ def run_deployments(
         retcode = deploy_to(compstate, host, revision, args.verbose, interactions)
         if retcode != 0:
             # TODO: work out if it makes sense to try to rollback here?
-            interactions.show_error(f"Failed to deploy to '{host}' (exit status: {retcode}).")
-            # TODO(PR): interactions exit?
-            exit(retcode)
+            message = f"Failed to deploy to '{host}' (exit status: {retcode})."
+            interactions.show_error(message)
+            raise FatalDeployError(message, exit_code=retcode)
 
     interactions.show_strong_ok("Done")
 
@@ -291,13 +304,18 @@ def command(args: argparse.Namespace) -> None:
     interactions = CLIInteractions()
 
     with guard_unicode_output(sys.stdout), guard_unicode_output(sys.stderr):
-        compstate = RawCompstate(args.compstate, local_only=False)
-        hosts = get_deployments(compstate, interactions)
+        try:
+            compstate = RawCompstate(args.compstate, local_only=False)
+            hosts = get_deployments(compstate, interactions)
 
-        require_no_changes(compstate, interactions)
-        require_valid(compstate, interactions)
+            require_no_changes(compstate, interactions)
+            require_valid(compstate, interactions)
 
-        run_deployments(args, compstate, hosts, interactions)
+            run_deployments(args, compstate, hosts, interactions)
+
+        except FatalDeployError as e:
+            # Callsites are responsible for showing the user a useful message.
+            exit(e.exit_code)
 
 
 def add_options(parser: argparse.ArgumentParser) -> None:
