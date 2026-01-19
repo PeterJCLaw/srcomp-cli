@@ -24,6 +24,7 @@ setup(
         'python-dateutil >=2.2, <3',
         'Fabric >= 2.7, <4',
         'invoke >= 1.7, <3',
+        # TODO(PR): bump srcomp version once we know what version will include match-release
         'sr.comp >=1.8, <2',
         'reportlab >=3.1.44, <5',
         'requests >=2.5.1, <3',
