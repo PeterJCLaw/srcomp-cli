@@ -4,12 +4,28 @@ import argparse
 import collections
 import dataclasses
 import itertools
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
-from typing import Iterable, Iterator
+from typing import Protocol
 
 from sr.comp.comp import SRComp
-from sr.comp.match_period import Match
+from sr.comp.match_period import Match, MatchSlot
+from sr.comp.teams import Team
 from sr.comp.types import MatchNumber, TLA
+
+
+class MinimalSchedule(Protocol):
+    @property
+    def knockout_rounds(self) -> Sequence[Sequence[Match]]:
+        ...
+
+    @property
+    def matches(self) -> Sequence[MatchSlot]:
+        ...
+
+    @property
+    def n_league_matches(self) -> int:
+        ...
 
 
 @dataclasses.dataclass(frozen=True)
@@ -58,33 +74,38 @@ def round_name(rounds_left: int) -> str:
     return ""
 
 
-def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
+def teams_and_rounds(
+    teams: Mapping[TLA, Team],
+    schedule: MinimalSchedule,
+    last_scored_match: MatchNumber | None,
+) -> Iterator[Round]:
     def teams_from_matches(matches: Iterable[Match]) -> frozenset[TLA]:
         teams = set(itertools.chain.from_iterable(x.teams for x in matches))
         return frozenset(x for x in teams if x is not None)
 
-    rounds = comp.schedule.knockout_rounds
+    rounds = schedule.knockout_rounds
 
     # Teams at the end of the league. Note that this doesn't include teams which
     # have dropped out of their own accord by that point.
-    first_knockouts_match = MatchNumber(comp.schedule.n_league_matches)
+    first_knockouts_match = MatchNumber(schedule.n_league_matches)
     teams_last_round: frozenset[TLA]
     teams_last_round = frozenset(
         tla
-        for tla, team in comp.teams.items()
+        for tla, team in teams.items()
         if team.is_still_around(first_knockouts_match)
     )
 
+    # TODO: cope with past matches missing scores.
     teams_with_future_matches = teams_from_matches(
         itertools.chain.from_iterable(
             (
                 x.values()
-                for x in comp.schedule.matches[comp.scores.last_scored_match + 1:]
+                for x in schedule.matches[last_scored_match + 1:]
             ),
         ),
     )
 
-    all_teams_out = comp.teams.keys() - teams_with_future_matches
+    all_teams_out = teams.keys() - teams_with_future_matches
 
     last_round_by_team = {}
 
@@ -109,14 +130,18 @@ def teams_and_rounds(comp: SRComp) -> Iterator[Round]:
             teams_remaining=frozenset(),
             teams_out=teams_out,
             prior_rounds_complete=True,
-            this_round_complete=comp.scores.last_scored_match >= max(x.num for x in matches),
+            this_round_complete=last_scored_match >= max(x.num for x in matches),
         )
 
 
 def command(settings: argparse.Namespace) -> None:
     comp = SRComp(settings.compstate)
 
-    for round_info in teams_and_rounds(comp):
+    for round_info in teams_and_rounds(
+        comp.teams,
+        comp.schedule,
+        comp.scores.last_scored_match,
+    ):
         print(f"## Teams not in round {round_info.number} ({round_info.name})")
         print("Fully scored" if round_info.this_round_complete else "\nWARNING: Not fully scored")
         print()
