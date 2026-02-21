@@ -101,6 +101,7 @@ def command(args: argparse.Namespace) -> None:
     for period in comp.schedule.match_periods:
         print(f' · {format_period(period, match_duration)}')
 
+    print("Last released match: {}".format(comp.operations.last_released_match))
     print("Last scored match: {}".format(comp.scores.last_scored_match))
 
 
