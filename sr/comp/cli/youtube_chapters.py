@@ -36,9 +36,12 @@ def command(settings: argparse.Namespace) -> None:
     # Yes, this doesn't account for the game not aligning within the slot.
     # Happily we don't need to account for that explicitly as it's a fixed
     # offset which affects all matches equally and thus drops out.
-    stream_start = _start_time(slots[0]) - offset
+    start_time = _start_time(slots[0])
+    stream_start = start_time - offset
 
     print(f"{format_time(datetime.timedelta())} Introduction")
+
+    last_end_time = start_time
     for slot in slots:
         match_teams = []
         for match in slot.values():
@@ -49,10 +52,22 @@ def command(settings: argparse.Namespace) -> None:
             match_teams.append(" vs ".join(opponents))
 
         slot_teams = " | ".join(match_teams)
+
+        if match.start_time > last_end_time:
+            gap_steam_time = format_time(last_end_time - stream_start)
+            gap_duration = format_time(match.start_time - last_end_time)
+            print(f"{gap_steam_time}: Gap ({gap_duration})")
+
         match_steam_time = format_time(match.start_time - stream_start)
         print(f"{match_steam_time} {match.display_name}: {slot_teams}")
 
+        last_end_time = match.end_time
+
+    post_stream_time = format_time(match.end_time - stream_start)
+    print(f"{post_stream_time}: After matches (Note: add details here)")
+
     sys.stdout.flush()
+    print("Note: review to remove small gaps!", file=sys.stderr)
     print("Note: also add the outtro/wrapup!", file=sys.stderr)
 
 

@@ -1,11 +1,18 @@
 0:00:00 Introduction
 0:10:00 Match 0: CLY vs TTN | GRS vs QMC
+0:15:00: Gap (0:01:00)
 0:16:00 Match 1: WYC vs QMS vs LSS vs EMM | BPV vs BDF vs NHS vs MEA
+0:21:00: Gap (0:01:00)
 0:22:00 Match 2: ICE vs MFG vs SWI vs BRN | TBG vs EMM vs SGS vs GYG
+0:27:00: Gap (0:01:15)
 0:28:15 Match 3: MAI2 vs HSO vs KDE vs CCR | SCC vs LSS vs HZW vs MAI
+0:33:15: Gap (0:01:00)
 0:34:15 Match 4: BRN vs RED vs NHS vs JMS | KHS vs BPV vs DSF vs HSO
+0:39:15: Gap (0:01:00)
 0:40:15 Match 5: BGS vs HRS vs BPV vs GRD | RGS vs CRB vs BRN vs TTN
+0:45:15: Gap (0:01:00)
 0:46:15 Match 6: MEA vs TTN vs GRD vs TBG | EMM vs CCR vs LSS vs CLF
+0:51:15: Gap (0:01:00)
 0:52:15 Match 7: CGS vs KHS vs CLF vs BRN | MFG vs RGS vs RED vs SWI
 0:57:15 Match 8: GYG vs JMS vs TWG vs KDE | ICE vs CGS vs SCC vs KES
 1:02:15 Match 9: TWG vs SEN vs LFG vs PSC | SGS vs BRK vs GYG vs RUN
@@ -52,6 +59,7 @@
 4:27:15 Match 50: QMS vs HZW vs BWS vs ICE | CGS vs HYP vs LFG vs MAI2
 4:32:15 Match 51: RUN vs KHS vs CLY vs NHS | KES vs QMS vs PAG vs PSC
 4:37:15 Match 52: CGS vs SWI vs LFG vs EMM | CLY vs GRD vs HSO vs TWG
+4:42:15: Gap (15:57:45)
 20:40:00 Match 53: MAI vs ICE vs MAI2 vs TWG | CRB vs HRS vs QMS vs GYG
 20:45:00 Match 54: CCR vs MEA vs HYP vs KHS | HRS vs SEN vs QMS vs BAY
 20:50:00 Match 55: MAI vs STA vs BRK vs SEN | KDE vs LSS vs CLY vs MFG
@@ -86,6 +94,7 @@
 23:15:00 Match 84: QMS vs CLF vs GYG vs ICE | CPR vs HRS vs BRK vs RED
 23:20:00 Match 85: SWI vs BGS vs HYP vs BDF | SCC vs EMM vs SEN vs DSF
 23:25:00 Match 86: PSC vs SCC vs HSO vs CLY | QMS vs BAY vs MAI2 vs DSF
+23:30:00: Gap (0:55:00)
 24:25:00 Match 87: TWG vs SGS vs PAS vs BRK | LFG vs KHS vs BPV vs HZW
 24:30:00 Match 88: SEN vs LSS vs RUN vs GYG | CLY vs LFG vs RGS vs MEA
 24:35:00 Match 89: QEH vs GRS vs GRD vs DSF | RGS vs WYC vs SWI vs NHS
@@ -110,6 +119,7 @@
 26:10:00 Match 108: RWD vs RGS vs MAI2 vs BAY | EMM vs MAI vs CCR vs HYP
 26:15:00 Match 109: RWD vs PAS vs CLF vs SGS | PSC vs BGS vs PAG vs SWI
 26:20:00 Match 110: MEA vs BWS vs SWI vs ICE | GYG vs CLY vs KES vs KHS
+26:25:00: Gap (0:15:00)
 26:40:00 Match 111: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ???
 26:45:00 Match 112: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ???
 26:50:00 Match 113: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ???
@@ -118,15 +128,21 @@
 27:05:00 Match 116: ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
 27:10:00 Match 117: ??? vs ??? vs ??? | ??? vs ??? vs ???
 27:15:00 Match 118: ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:20:00: Gap (0:05:00)
 27:25:00 Match 119: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
 27:30:00 Match 120: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
 27:35:00 Match 121: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
 27:40:00 Match 122: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:45:00: Gap (0:05:00)
 27:50:00 Quarter 1 (#123): ??? vs ??? vs ??? vs ???
 27:55:00 Quarter 2 (#124): ??? vs ??? vs ??? vs ???
 28:00:00 Quarter 3 (#125): ??? vs ??? vs ??? vs ???
 28:05:00 Quarter 4 (#126): ??? vs ??? vs ??? vs ???
+28:10:00: Gap (0:05:00)
 28:15:00 Semi 1 (#127): ??? vs ??? vs ??? vs ???
 28:20:00 Semi 2 (#128): ??? vs ??? vs ??? vs ???
+28:25:00: Gap (0:10:00)
 28:35:00 Final (#129): ??? vs ??? vs ??? vs ???
+28:40:00: After matches (Note: add details here)
+Note: review to remove small gaps!
 Note: also add the outtro/wrapup!
