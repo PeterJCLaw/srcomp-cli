@@ -60,7 +60,7 @@ def order_teams_by_location(layout_yaml: Path, team_ids: list[TLA]) -> list[TLA]
 
     extra = layout_teams - all_teams
     if extra:
-        print(f"WARNING: Extra teams in layout will be ignoreed: {join_and(extra)}.")
+        print(f"WARNING: Extra teams in layout will be ignored: {join_and(extra)}.")
         for tla in extra:
             ordered_teams.remove(tla)
 
