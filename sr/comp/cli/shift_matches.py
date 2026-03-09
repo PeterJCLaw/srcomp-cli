@@ -14,27 +14,25 @@ def command(args: argparse.Namespace) -> None:
 
     from sr.comp.cli import yaml_round_trip as yaml
 
-    schedule = yaml.load(args.compstate / 'schedule.yaml')
+    with yaml.edit(args.compstate / 'schedule.yaml') as schedule:
 
-    old_start = schedule['match_periods'][args.focus][0]['start_time']
-    new_start = datetime.now(old_start.tzinfo)
-    # round to 1-2 minutes ahead
-    new_start -= timedelta(
-        seconds=new_start.second,
-        microseconds=new_start.microsecond,
-    )
-    new_start += timedelta(minutes=2)
+        old_start = schedule['match_periods'][args.focus][0]['start_time']
+        new_start = datetime.now(old_start.tzinfo)
+        # round to 1-2 minutes ahead
+        new_start -= timedelta(
+            seconds=new_start.second,
+            microseconds=new_start.microsecond,
+        )
+        new_start += timedelta(minutes=2)
 
-    dt = new_start - old_start
+        dt = new_start - old_start
 
-    for group in schedule['match_periods'].values():
-        for entry in group:
-            entry['start_time'] += dt
-            entry['end_time'] += dt
-            if 'max_end_time' in entry:
-                entry['max_end_time'] += dt
-
-    yaml.dump(schedule, dest=args.compstate / 'schedule.yaml')
+        for group in schedule['match_periods'].values():
+            for entry in group:
+                entry['start_time'] += dt
+                entry['end_time'] += dt
+                if 'max_end_time' in entry:
+                    entry['max_end_time'] += dt
 
     with (args.compstate / '.update-pls').open('w'):
         pass
