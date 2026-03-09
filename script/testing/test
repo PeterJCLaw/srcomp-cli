@@ -2,4 +2,4 @@
 
 cd $(dirname $(dirname  $(dirname $0)))
 
-python3 -m unittest discover "$@"
+python3 -m unittest discover --buffer "$@"
