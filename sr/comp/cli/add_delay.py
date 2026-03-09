@@ -114,18 +114,14 @@ def add_delay(schedule: dict[str, Any], delay_seconds: int, when: datetime.datet
 def command(settings: argparse.Namespace) -> tuple[datetime.timedelta, datetime.datetime]:
     from sr.comp.cli import yaml_round_trip as yaml
 
-    schedule_path: Path = settings.compstate / 'schedule.yaml'
-    schedule = yaml.load(schedule_path)
+    with yaml.edit(settings.compstate / 'schedule.yaml') as schedule:
+        how_long = parse_duration(settings.how_long)
+        how_long_seconds = how_long.seconds
 
-    how_long = parse_duration(settings.how_long)
-    how_long_seconds = how_long.seconds
+        when = parse_time(settings.compstate, settings.when)
+        when = when.replace(microsecond=0)
 
-    when = parse_time(settings.compstate, settings.when)
-    when = when.replace(microsecond=0)
-
-    add_delay(schedule, how_long_seconds, when)
-
-    yaml.dump(schedule, dest=schedule_path)
+        add_delay(schedule, how_long_seconds, when)
 
     return how_long, when
 

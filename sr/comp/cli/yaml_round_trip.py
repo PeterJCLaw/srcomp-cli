@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+from collections.abc import Iterator
 from pathlib import Path
 from typing import Any, IO, TYPE_CHECKING
 
@@ -8,6 +10,21 @@ if TYPE_CHECKING:
     import ruamel.yaml
 
 _ryaml = None
+
+
+@contextlib.contextmanager
+def edit(path: Path) -> Iterator[Any]:
+    """
+    Edit a yaml file, as a context manager.
+
+    Changes are saved only if the context exits cleanly (i.e: if no exceptions
+    are raised in the context).
+
+    This is a convenience helper for other commands.
+    """
+    raw_yaml = load(path)
+    yield raw_yaml
+    dump(raw_yaml, dest=path)
 
 
 def _load() -> ruamel.yaml.YAML:
@@ -49,8 +66,8 @@ def dump(data: dict[str, Any], dest: Path | IO[str]) -> None:
 
 
 def command(settings: argparse.Namespace) -> None:
-    fp = settings.file_path
-    dump(load(fp), dest=fp)
+    with edit(settings.file_path):
+        pass
 
 
 def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:

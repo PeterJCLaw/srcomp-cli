@@ -38,29 +38,26 @@ class Takeable(Generic[T]):
 def command(settings: argparse.Namespace) -> None:
     from sr.comp.cli import yaml_round_trip as yaml
 
-    layout_yaml: Path = settings.compstate / 'layout.yaml'
-    layout = yaml.load(layout_yaml)
-    layout_teams = layout['teams']
+    with yaml.edit(settings.compstate / 'layout.yaml') as layout:
+        layout_teams = layout['teams']
 
-    with open(settings.teams_list) as tlf:
-        teams_list = []
-        for line in tlf.readlines():
-            tla = line.split('#', 1)[0].strip()
-            if tla:
-                teams_list.append(tla)
+        with open(settings.teams_list) as tlf:
+            teams_list = []
+            for line in tlf.readlines():
+                tla = line.split('#', 1)[0].strip()
+                if tla:
+                    teams_list.append(tla)
 
-    teams = Takeable(teams_list)
+        teams = Takeable(teams_list)
 
-    for place in layout_teams:
-        # Ensure we replace the content of the list, but not the list
-        # itself so that the file's own layout is preserved
-        loc_teams = place['teams']
-        loc_teams[:] = teams.take(len(loc_teams))
+        for place in layout_teams:
+            # Ensure we replace the content of the list, but not the list
+            # itself so that the file's own layout is preserved
+            loc_teams = place['teams']
+            loc_teams[:] = teams.take(len(loc_teams))
 
-    if teams.has_more:
-        layout_teams[-1]['teams'] += teams.remainder
-
-    yaml.dump(layout, dest=layout_yaml)
+        if teams.has_more:
+            layout_teams[-1]['teams'] += teams.remainder
 
     print("Layout updated. You should consider re-importing the schedule now.")
 
