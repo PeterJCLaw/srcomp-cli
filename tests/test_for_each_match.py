@@ -1,3 +1,4 @@
+import argparse
 import contextlib
 import io
 import unittest
@@ -21,7 +22,7 @@ class ForEachMatchTests(unittest.TestCase):
     def test_smoke(self) -> None:
         compstate_path = str(Path(__file__).parent / 'dummy')
 
-        mock_settings = mock.Mock(
+        settings = argparse.Namespace(
             compstate=compstate_path,
             arena=None,
             matches=set([0, 2, 3]),
@@ -29,7 +30,7 @@ class ForEachMatchTests(unittest.TestCase):
         )
 
         with mock.patch('subprocess.check_call') as mock_check_call:
-            command(mock_settings)
+            command(settings)
 
         mock_check_call.assert_has_calls([
             mock.call(['spam', 'league:A', '0|- CLY TTN -']),

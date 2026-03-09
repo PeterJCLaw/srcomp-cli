@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import argparse
 import datetime
 import io
 import textwrap
 import unittest
 from pathlib import Path
-from unittest import mock
 
 from sr.comp.cli import yaml_round_trip as yaml
 from sr.comp.cli.yaml_round_trip import command
@@ -23,8 +23,8 @@ class RoundTripTests(unittest.TestCase):
 
         orig_mod, orig_content = self.get_info(dummy_schedule)
 
-        mock_settings = mock.Mock(file_path=dummy_schedule)
-        command(mock_settings)
+        settings = argparse.Namespace(file_path=dummy_schedule)
+        command(settings)
 
         new_mod, new_content = self.get_info(dummy_schedule)
 
