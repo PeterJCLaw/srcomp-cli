@@ -61,6 +61,10 @@ class TestKnockedOutTeams(unittest.TestCase):
         ])
         self.tlas = sorted(self.teams.keys())
 
+    # In these matches we assume that teams win in alphabetical order (which is
+    # also the order they're listed in `self.tlas`) -- so 'AAA' (index `0`) wins
+    # over 'CCC' (index `3`).
+
     def test_league_not_finished(self) -> None:
         self.assertKnockedOutTeams(
             knockout_rounds=[
@@ -126,11 +130,11 @@ class TestKnockedOutTeams(unittest.TestCase):
                     build_match(teams=self.tlas[4:]),
                 ],
                 [
-                    build_match(teams=self.tlas[2:6]),
+                    build_match(teams=self.tlas[:2] + self.tlas[4:6]),
                 ],
             ],
             expected_knockouts=[
                 frozenset(),
-                frozenset(self.tlas[:2] + self.tlas[-2:]),
+                frozenset(self.tlas[2:4] + self.tlas[-2:]),
             ],
         )
