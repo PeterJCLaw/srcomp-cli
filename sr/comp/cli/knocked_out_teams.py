@@ -54,14 +54,15 @@ class Round:
     """
 
 
-def round_name(rounds_left: int) -> str:
+def round_name(round_number: int, *, final_round_number: int) -> str:
+    rounds_left = final_round_number - round_number
     if rounds_left == 0:
         return "Finals"
     elif rounds_left == 1:
         return "Semi Finals"
     elif rounds_left == 2:
         return "Quarter Finals"
-    return ""
+    return f"Round {round_number}"
 
 
 def teams_and_rounds(teams: Mapping[TLA, Team], schedule: MinimalSchedule) -> Iterator[Round]:
@@ -81,7 +82,7 @@ def teams_and_rounds(teams: Mapping[TLA, Team], schedule: MinimalSchedule) -> It
         if team.is_still_around(first_knockouts_match)
     )
 
-    last_round_num = len(rounds) - 1
+    final_round_num = len(rounds) - 1
     for i, matches in enumerate(rounds):
         teams_this_round = teams_from_matches(matches)
         teams_remaining = teams_from_matches(itertools.chain(*rounds[i:]))
@@ -90,7 +91,7 @@ def teams_and_rounds(teams: Mapping[TLA, Team], schedule: MinimalSchedule) -> It
 
         yield Round(
             i,
-            round_name(last_round_num - i),
+            round_name(i, final_round_number=final_round_num),
             teams_this_round,
             teams_remaining,
             teams_out,
@@ -103,8 +104,12 @@ def teams_and_rounds(teams: Mapping[TLA, Team], schedule: MinimalSchedule) -> It
 def command(settings: argparse.Namespace) -> None:
     comp = SRComp(settings.compstate)
 
+    def print_teams(teams: Iterable[TLA]) -> None:
+        for tla in sorted(teams):
+            print(tla, comp.teams[tla].name)
+
     for round_info in teams_and_rounds(comp.teams, comp.schedule):
-        print(f"## Teams not in round {round_info.number} ({round_info.name})")
+        print(f"## Teams not in {round_info.name}")
         print()
 
         if not round_info.prior_rounds_complete:
@@ -120,8 +125,7 @@ def command(settings: argparse.Namespace) -> None:
             if not settings.force:
                 return
 
-        for tla in sorted(round_info.teams_out):
-            print(tla, comp.teams[tla].name)
+        print_teams(round_info.teams_out)
 
         print()
 
