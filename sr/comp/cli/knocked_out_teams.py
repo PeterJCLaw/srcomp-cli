@@ -166,10 +166,10 @@ def teams_and_rounds(
         )
 
         teams_knocked_out = frozenset(
-            x.tla
-            for x in teams_by_last_appearance[i]
-            if x.tla not in teams_dropped_out
-            if x.all_matches_scored
+            team_info.tla
+            for team_info in teams_by_last_appearance[i]
+            if team_info.tla not in teams_dropped_out
+            if team_info.all_matches_scored
         )
 
         yield RoundResults(
