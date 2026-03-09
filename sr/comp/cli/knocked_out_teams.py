@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import collections
 import dataclasses
-import itertools
 from collections.abc import (
     Callable,
     Collection,
@@ -53,10 +52,10 @@ class RoundResults:
     matches having all been scored.
     """
 
-    prior_rounds_complete: bool
+    is_complete: bool
     """
-    Whether the scoring for all the matches prior to ths round has completed and
-    thus the knockouts for this round are completely known.
+    Whether the scoring for all the matches in ths round has completed and thus
+    the knockouts for this round are completely known.
     """
 
 
@@ -105,10 +104,6 @@ def teams_and_rounds(
     def get_match_id(match: Match) -> MatchId:
         return match.arena, match.num
 
-    def teams_from_matches(matches: Iterable[Match]) -> frozenset[TLA]:
-        teams = set(itertools.chain.from_iterable(x.teams for x in matches))
-        return frozenset(x for x in teams if x is not None)
-
     rounds = schedule.knockout_rounds
     knockout_matches = [m for r in rounds for m in r]
 
@@ -156,15 +151,13 @@ def teams_and_rounds(
         name="League",
         teams_dropped_out=frozenset(teams_after_league[False]),
         teams_knocked_out=frozenset(teams_after_league[True] - team_infos.keys()),
-        prior_rounds_complete=bool(team_infos),
+        is_complete=bool(team_infos),
     )
 
     final_round_num = len(rounds) - 1
 
     # Results for the knockout rounds themselves
     for i, matches in enumerate(rounds):
-        teams_this_round = teams_from_matches(matches)
-
         teams_dropped_out = frozenset(
             tla
             for tla, team in teams.items()
@@ -184,7 +177,7 @@ def teams_and_rounds(
             round_name(i, final_round_number=final_round_num),
             teams_dropped_out=teams_dropped_out,
             teams_knocked_out=teams_knocked_out,
-            prior_rounds_complete=UNKNOWABLE_TEAM not in teams_this_round,
+            is_complete=all(has_scores(m) for m in matches),
         )
 
 
@@ -210,12 +203,12 @@ def command(settings: argparse.Namespace) -> None:
             print_teams(round_info.teams_dropped_out)
             print()
 
-        if not round_info.prior_rounds_complete:
+        if not round_info.is_complete:
             if settings.force:
                 print("Warning: ", end='')
 
             print(
-                "This round is not yet fully scored, knocked-out teams this "
+                "Scoring for this round is not yet complete, knocked-out teams this "
                 "round are not yet confirmed.",
             )
             print()
