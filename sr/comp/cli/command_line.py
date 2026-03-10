@@ -16,6 +16,7 @@ from . import (
     knocked_out_teams,
     list_midi_ports,
     match_order_teams,
+    modernise_static_knockout,
     print_schedule,
     schedule_league,
     scorer,
@@ -59,6 +60,7 @@ def argument_parser() -> argparse.ArgumentParser:
     knocked_out_teams.add_subparser(subparsers)
     list_midi_ports.add_subparser(subparsers)
     match_order_teams.add_subparser(subparsers)
+    modernise_static_knockout.add_subparser(subparsers)
     print_schedule.add_subparser(subparsers)
     schedule_league.add_subparser(subparsers)
     scorer.add_subparser(subparsers)

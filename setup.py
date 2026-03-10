@@ -24,7 +24,7 @@ setup(
         'python-dateutil >=2.2, <3',
         'Fabric >= 2.7, <4',
         'invoke >= 1.7, <3',
-        'sr.comp >=1.8, <2',
+        'sr.comp >=1.13, <2',
         'reportlab >=3.1.44, <5',
         'requests >=2.5.1, <3',
         # Work around https://sourceforge.net/p/ruamel-yaml/tickets/534/, where

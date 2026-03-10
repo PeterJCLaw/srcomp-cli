@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import contextlib
 import datetime
+import subprocess
+import tempfile
+from collections.abc import Iterator
+from pathlib import Path
 from typing import Sequence
 
 from dateutil.tz import UTC
@@ -31,3 +36,22 @@ def build_match(
         type_,
         use_resolved_ranking,
     )
+
+
+@contextlib.contextmanager
+def dummy_compstate(revision: str | None = None) -> Iterator[Path]:
+    REF_COMPSTATE = Path(__file__).parent / 'dummy'
+
+    with tempfile.TemporaryDirectory() as tempdir:
+        def _git(*args: str | Path) -> None:
+            subprocess.check_call(
+                ['git', *args],
+                env={'GIT_ADVICE': "0"},
+                cwd=tempdir,
+            )
+
+        _git('clone', '--quiet', REF_COMPSTATE, tempdir)
+        if revision is not None:
+            _git('checkout', '--quiet', revision)
+
+        yield Path(tempdir)
