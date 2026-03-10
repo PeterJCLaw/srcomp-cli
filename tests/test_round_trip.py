@@ -10,6 +10,8 @@ from pathlib import Path
 from sr.comp.cli import yaml_round_trip as yaml
 from sr.comp.cli.yaml_round_trip import command
 
+from .factories import dummy_compstate
+
 
 class RoundTripTests(unittest.TestCase):
     maxDiff = 8000
@@ -18,22 +20,23 @@ class RoundTripTests(unittest.TestCase):
         return file_path.stat().st_mtime, file_path.read_text()
 
     def test_dummy_schedule(self) -> None:
-        # Assumes that the dummy schedule is already properly formatted
-        dummy_schedule = Path(__file__).parent / 'dummy' / 'schedule.yaml'
+        with dummy_compstate() as compstate_path:
+            # Assumes that the dummy schedule is already properly formatted
+            dummy_schedule = compstate_path / 'schedule.yaml'
 
-        orig_mod, orig_content = self.get_info(dummy_schedule)
+            orig_mod, orig_content = self.get_info(dummy_schedule)
 
-        settings = argparse.Namespace(file_path=dummy_schedule)
-        command(settings)
+            settings = argparse.Namespace(file_path=dummy_schedule)
+            command(settings)
 
-        new_mod, new_content = self.get_info(dummy_schedule)
+            new_mod, new_content = self.get_info(dummy_schedule)
 
-        self.assertNotEqual(orig_mod, new_mod, "Should have rewritten the file")
-        self.assertEqual(
-            orig_content,
-            new_content,
-            "Should not have changed file content",
-        )
+            self.assertNotEqual(orig_mod, new_mod, "Should have rewritten the file")
+            self.assertEqual(
+                orig_content,
+                new_content,
+                "Should not have changed file content",
+            )
 
     def test_timestamp_with_timezone(self) -> None:
         content = textwrap.dedent('''
