@@ -20,6 +20,11 @@ def command(settings: argparse.Namespace) -> None:
 
         # Update in-place to preserve comments as much as we can
         new_config = StaticScheduler.modernise_config_if_needed(static_knockout)
+
+        if new_config == static_knockout:
+            print("Static knockout config already up to date, nothing to do")
+            return
+
         static_knockout.clear()
         static_knockout.update(new_config)
 
