@@ -6,7 +6,7 @@ import unittest
 from collections.abc import Collection, Mapping, Sequence
 
 from sr.comp.cli.knocked_out_teams import teams_and_rounds
-from sr.comp.knockout_scheduler import UNKNOWABLE_TEAM
+from sr.comp.knockout_scheduler import KnockoutRound, UNKNOWABLE_TEAM
 from sr.comp.match_period import Match, MatchType
 from sr.comp.teams import Team
 from sr.comp.types import MatchNumber, TLA
@@ -16,7 +16,7 @@ from . import factories
 
 @dataclasses.dataclass(frozen=True)
 class FakeSchedule:
-    knockout_rounds: Sequence[Sequence[Match]]
+    knockout_rounds: Sequence[KnockoutRound]
     n_league_matches: int
 
 
@@ -60,7 +60,10 @@ class TestKnockedOutTeams(unittest.TestCase):
         result = list(teams_and_rounds(
             self.teams,
             FakeSchedule(
-                knockout_rounds=[[m for m, _ in r] for r in knockout_rounds],
+                knockout_rounds=[
+                    KnockoutRound(f"Round {idx}", [m for m, _ in r])
+                    for idx, r in enumerate(knockout_rounds)
+                ],
                 n_league_matches=1,
             ),
             has_scores=lambda m: is_scored_map[m.arena, m.num],

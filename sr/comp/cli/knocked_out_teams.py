@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Protocol
 
 from sr.comp.comp import SRComp
-from sr.comp.knockout_scheduler import UNKNOWABLE_TEAM
+from sr.comp.knockout_scheduler import KnockoutRound, UNKNOWABLE_TEAM
 from sr.comp.match_period import Match
 from sr.comp.teams import Team
 from sr.comp.types import MatchId, MatchNumber, TLA
@@ -23,7 +23,7 @@ from sr.comp.types import MatchId, MatchNumber, TLA
 
 class MinimalSchedule(Protocol):
     @property
-    def knockout_rounds(self) -> Sequence[Sequence[Match]]:
+    def knockout_rounds(self) -> Sequence[KnockoutRound]:
         ...
 
     @property
@@ -67,17 +67,6 @@ class TeamInfo:
     all_matches_scored: bool
 
 
-def round_name(round_number: int, *, final_round_number: int) -> str:
-    rounds_left = final_round_number - round_number
-    if rounds_left == 0:
-        return "Finals"
-    elif rounds_left == 1:
-        return "Semi Finals"
-    elif rounds_left == 2:
-        return "Quarter Finals"
-    return f"Round {round_number}"
-
-
 def teams_and_rounds(
     teams: Mapping[TLA, Team],
     schedule: MinimalSchedule,
@@ -108,8 +97,8 @@ def teams_and_rounds(
     knockout_matches = [m for r in rounds for m in r]
 
     round_nums_by_match: dict[MatchId, int] = {}
-    for i, matches in enumerate(rounds):
-        for match in matches:
+    for i, round_ in enumerate(rounds):
+        for match in round_:
             round_nums_by_match[get_match_id(match)] = i
 
     matches_by_team: collections.defaultdict[TLA, list[Match]]
@@ -134,8 +123,6 @@ def teams_and_rounds(
     for team_info in team_infos.values():
         teams_by_last_appearance[team_info.last_appearance].append(team_info)
 
-    final_round_num = len(rounds) - 1
-
     # Teams which don't enter the knockouts
 
     # Teams at the end of the league. Note that this doesn't include teams which
@@ -154,15 +141,13 @@ def teams_and_rounds(
         is_complete=bool(team_infos),
     )
 
-    final_round_num = len(rounds) - 1
-
     # Results for the knockout rounds themselves
-    for i, matches in enumerate(rounds):
+    for i, round_ in enumerate(rounds):
         teams_dropped_out = frozenset(
             tla
             for tla, team in teams.items()
-            if team.is_still_around(matches[0].num)
-            if not team.is_still_around(matches[-1].num)
+            if team.is_still_around(round_[0].num)
+            if not team.is_still_around(round_[-1].num)
         )
 
         teams_knocked_out = frozenset(
@@ -174,10 +159,10 @@ def teams_and_rounds(
 
         yield RoundResults(
             i,
-            round_name(i, final_round_number=final_round_num),
+            round_.name,
             teams_dropped_out=teams_dropped_out,
             teams_knocked_out=teams_knocked_out,
-            is_complete=all(has_scores(m) for m in matches),
+            is_complete=all(has_scores(m) for m in round_),
         )
 
 
