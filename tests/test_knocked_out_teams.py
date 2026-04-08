@@ -7,7 +7,7 @@ from collections.abc import Collection, Mapping, Sequence
 
 from sr.comp.cli.knocked_out_teams import teams_and_rounds
 from sr.comp.knockout_scheduler import KnockoutRound, UNKNOWABLE_TEAM
-from sr.comp.match_period import Match, MatchType
+from sr.comp.match_period import KnockoutMatch, MatchType
 from sr.comp.teams import Team
 from sr.comp.types import MatchNumber, TLA
 
@@ -34,8 +34,7 @@ class TestKnockedOutTeams(unittest.TestCase):
         *,
         teams: Sequence[TLA | None],
         is_scored: bool,
-        type_: MatchType = MatchType.knockout,
-    ) -> tuple[Match, bool]:
+    ) -> tuple[KnockoutMatch, bool]:
         return (
             factories.build_match(
                 num=next(self.match_counter),
@@ -48,7 +47,7 @@ class TestKnockedOutTeams(unittest.TestCase):
 
     def assertKnockedOutTeams(
         self,
-        knockout_rounds: Sequence[Sequence[tuple[Match, bool]]],
+        knockout_rounds: Sequence[Sequence[tuple[KnockoutMatch, bool]]],
         expected_knockouts: list[frozenset[TLA]],
     ) -> None:
         is_scored_map = {
