@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -38,7 +39,9 @@ class SimpleCommandsTests(unittest.TestCase):
                 )
                 self.assertEqual(0, result.returncode, result.stdout.decode())
 
-                snapshot = (snapshots / command).with_suffix('.txt')
+                # Lightweight attempt to ensure "safe" names for files
+                name = re.sub(r'[^\w._=-]+', '-', '_'.join((command, *args)))
+                snapshot = (snapshots / name).with_suffix('.txt')
 
                 # To record a new snapshot, uncomment the following line and run the tests:
                 # snapshot.write_bytes(result.stdout)
