@@ -93,9 +93,30 @@ def get_current_match_start(compstate_path: Path) -> datetime.datetime:
     return min(x.start_time for x in current_matches)
 
 
+def get_next_match_start(compstate_path: Path) -> datetime.datetime:
+    from sr.comp.comp import SRComp
+
+    compstate = SRComp(compstate_path)
+    now = compstate.schedule.datetime_now
+
+    next_matches = [
+        match
+        for slot in compstate.schedule.matches
+        for match in slot.values()
+        if now < match.start_time
+    ]
+
+    if not next_matches:
+        raise Exception("No future matches, specify a valid time instead")
+
+    return min(x.start_time for x in next_matches)
+
+
 def parse_time(compstate_path: Path, when_str: str) -> datetime.datetime:
     if when_str == "current match":
         return get_current_match_start(compstate_path)
+    if when_str == "next match":
+        return get_next_match_start(compstate_path)
     else:
         return parse_datetime(when_str)
 
@@ -142,6 +163,7 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
             "When the delay should occur. This can be specified in a number of "
             "formats: an absolute time (parsed by dateutil), 'now', "
             "'current match' (the start of the current match slot), "
+            "'next match' (the start of the next match slot), "
             "'<duration> ago' or 'in <duration>' where <duration> is specified "
             "as a number of seconds or a string of the form 1m30s. "
             "Assumes all times are in the current timezone, regardless of input. "
