@@ -1,0 +1,131 @@
+ Num Time     |           A           |           B           |   Display Name   |
+   0 13:00:00 |  -  : CLY : TTN :  -  | GRS : QMC :  -  :  -  |     Match 0      |
+   1 13:06:00 | WYC : QMS : LSS : EMM | BPV : BDF : NHS : MEA |     Match 1      |
+   2 13:12:00 | ICE : MFG : SWI : BRN | TBG : EMM : SGS : GYG |     Match 2      |
+   3 13:18:15 | MAI2: HSO : KDE : CCR | SCC : LSS : HZW : MAI |     Match 3      |
+   4 13:24:15 | BRN : RED : NHS : JMS | KHS : BPV : DSF : HSO |     Match 4      |
+   5 13:30:15 | BGS : HRS : BPV : GRD | RGS : CRB : BRN : TTN |     Match 5      |
+   6 13:36:15 | MEA : TTN : GRD : TBG | EMM : CCR : LSS : CLF |     Match 6      |
+   7 13:42:15 | CGS : KHS : CLF : BRN | MFG : RGS : RED : SWI |     Match 7      |
+   8 13:47:15 | GYG : JMS : TWG : KDE | ICE : CGS : SCC : KES |     Match 8      |
+   9 13:52:15 | TWG : SEN : LFG : PSC | SGS : BRK : GYG : RUN |     Match 9      |
+  10 13:57:15 | SEN : JMS : LSS : RGS | SCC : DSF : HRS : KES |     Match 10     |
+  11 14:02:15 | CRB : KHS : TBG : SWI | WYC : BAY : LSS : HYP |     Match 11     |
+  12 14:07:15 | SGS : LFG : GRS : MFG | HZW : SCC : BDF : BPV |     Match 12     |
+  13 14:12:15 | CGS : NHS : SCC : BRN | PAG : CPR : HYP : SGS |     Match 13     |
+  14 14:17:15 | MFG : MAI2: SEN : GRS | CRB : BPV : DSF : TBG |     Match 14     |
+  15 14:22:15 | KES : TTN : JMS : GYG | NHS : SWI : CLF : SEN |     Match 15     |
+  16 14:27:15 | QEH : HRS : MAI2: SCC | TWG : SEN : KHS : PAG |     Match 16     |
+  17 14:32:15 | SWI : DSF : STA : ICE | TTN : CPR : JMS : SGS |     Match 17     |
+  18 14:37:15 | GRD : SCC : RUN : MAI2| QEH : HZW : BRN : HYP |     Match 18     |
+  19 14:42:15 | HSO : LFG : GRD : BAY | HRS : BRN : MAI2: DSF |     Match 19     |
+  20 14:47:15 | BGS : GRD : CPR : BRN | SWI : BRK : HZW : BPV |     Match 20     |
+  21 14:52:15 | BPV : QEH : PAS : NHS | BGS : HYP : GRD : MAI |     Match 21     |
+  22 14:57:15 | TWG : BWS : GYG : DSF | STA : HRS : KDE : ICE |     Match 22     |
+  23 15:02:15 | KES : TTN : CPR : PAS | KHS : BRN : BGS : RWD |     Match 23     |
+  24 15:07:15 | NHS : MEA : BWS : CCR | QEH : LFG : KHS : MAI2|     Match 24     |
+  25 15:12:15 | TBG : SGS : BRK : RWD | TTN : CRB : LFG : CLY |     Match 25     |
+  26 15:17:15 | LFG : CLY : PAS : QEH | GRD : RUN : NHS : HSO |     Match 26     |
+  27 15:22:15 | GRD : HRS : TBG : PAG | SEN : HYP : CLF : CLY |     Match 27     |
+  28 15:27:15 | CGS : MAI : KES : BAY | RED : BDF : BRK : CLY |     Match 28     |
+  29 15:32:15 | MFG : QMC : HYP : RWD | HSO : RGS : KDE : BDF |     Match 29     |
+  30 15:37:15 | PAG : RGS : BPV : BRK | CLY : SEN : SCC : EMM |     Match 30     |
+  31 15:42:15 | QEH : TTN : CLY : RWD | BDF : HSO : HRS : ICE |     Match 31     |
+  32 15:47:15 | SCC : MFG : SWI : LFG | KHS : TWG : MAI : SGS |     Match 32     |
+  33 15:52:15 | KDE : SEN : BRN : MAI2| PAG : GRS : KHS : LFG |     Match 33     |
+  34 15:57:15 | CCR : SGS : QEH : CLY | CGS : CLF : KHS : HRS |     Match 34     |
+  35 16:02:15 | KES : PSC : KDE : HZW | CRB : WYC : RUN : BGS |     Match 35     |
+  36 16:07:15 | LFG : WYC : CGS : STA | TWG : CLY : HRS : GYG |     Match 36     |
+  37 16:12:15 | PAG : CGS : GYG : LSS | SWI : EMM : CRB : PSC |     Match 37     |
+  38 16:17:15 | CLF : BWS : GRD : PSC | HRS : KES : BDF : TBG |     Match 38     |
+  39 16:22:15 | CGS : MAI2: BRK : BAY | RWD : PSC : RGS : TBG |     Match 39     |
+  40 16:27:15 | HSO : LSS : SCC : DSF | RED : SWI : RUN : PSC |     Match 40     |
+  41 16:32:15 | GRD : BRK : QMS : BAY | MFG : SEN : PSC : BPV |     Match 41     |
+  42 16:37:15 | KHS : SEN : MFG : GYG | GRD : ICE : PSC : KDE |     Match 42     |
+  43 16:42:15 | RWD : RED : KHS : RUN | PAS : BDF : BRK : MAI |     Match 43     |
+  44 16:47:15 | PAG : SEN : SGS : QEH | MAI : QMS : BAY : KES |     Match 44     |
+  45 16:52:15 | LSS : MAI : PAS : KHS | SEN : MAI2: RUN : PSC |     Match 45     |
+  46 16:57:15 | WYC : BAY : NHS : BPV | BGS : MFG : SEN : LSS |     Match 46     |
+  47 17:02:15 | TBG : HZW : BPV : BRK | HSO : DSF : CGS : CCR |     Match 47     |
+  48 17:07:15 | BPV : MAI : WYC : BGS | STA : RGS : KES : SGS |     Match 48     |
+  49 17:12:15 | HZW : LSS : SGS : GRD | QEH : CLY : CLF : QMS |     Match 49     |
+  50 17:17:15 | QMS : HZW : BWS : ICE | CGS : HYP : LFG : MAI2|     Match 50     |
+  51 17:22:15 | RUN : KHS : CLY : NHS | KES : QMS : PAG : PSC |     Match 51     |
+  52 17:27:15 | CGS : SWI : LFG : EMM | CLY : GRD : HSO : TWG |     Match 52     |
+  53 09:30:00 | MAI : ICE : MAI2: TWG | CRB : HRS : QMS : GYG |     Match 53     |
+  54 09:35:00 | CCR : MEA : HYP : KHS | HRS : SEN : QMS : BAY |     Match 54     |
+  55 09:40:00 | MAI : STA : BRK : SEN | KDE : LSS : CLY : MFG |     Match 55     |
+  56 09:45:00 | RWD : HYP : CGS : MFG | HSO : CLY : WYC : RUN |     Match 56     |
+  57 09:50:00 | HRS : EMM : HZW : KDE | CPR : BWS : QMS : STA |     Match 57     |
+  58 09:55:00 | PSC : CPR : KDE : HSO | SWI : GRS : RED : EMM |     Match 58     |
+  59 10:00:00 | HYP : DSF : GRD : BRK | SCC : NHS : SGS : PAG |     Match 59     |
+  60 10:05:00 | BDF : DSF : GRS : SCC | BGS : ICE : PAG : EMM |     Match 60     |
+  61 10:10:00 | GYG : BRN : MEA : CLF | BDF : MFG : GRS : CLY |     Match 61     |
+  62 10:15:00 | SCC : PSC : JMS : BPV | LFG : MAI : BRK : HYP |     Match 62     |
+  63 10:20:00 | JMS : RWD : MAI : EMM | TBG : RED : SCC : TWG |     Match 63     |
+  64 10:25:00 | TBG : BRK : RUN : GRD | CLY : PSC : QEH : RWD |     Match 64     |
+  65 10:30:00 | CLF : KHS : WYC : KES | GRS : QEH : RUN : TTN |     Match 65     |
+  66 10:35:00 | PSC : SCC : STA : DSF | NHS : EMM : MAI2: GRS |     Match 66     |
+  67 10:40:00 | BRN : SWI : CPR : LSS | MEA : LFG : QMS : STA |     Match 67     |
+  68 10:45:00 | RWD : MAI2: BRK : HRS | CLY : MFG : NHS : TTN |     Match 68     |
+  69 10:50:00 | BPV : TTN : HZW : STA | CGS : LSS : RUN : KHS |     Match 69     |
+  70 10:55:00 | TTN : CLF : BAY : STA | KDE : CRB : SCC : QEH |     Match 70     |
+  71 11:00:00 | HRS : BAY : KES : HZW | SCC : BRN : LSS : CGS |     Match 71     |
+  72 11:05:00 | QMS : CPR : PSC : LFG | BPV : TWG : CLY : MAI |     Match 72     |
+  73 11:10:00 | GRD : MEA : DSF : ICE | KDE : PAS : CCR : HSO |     Match 73     |
+  74 11:15:00 | HZW : EMM : CGS : BWS | PSC : STA : QMS : BAY |     Match 74     |
+  75 11:20:00 | QEH : CRB : CPR : GYG | TTN : KDE : BAY : BRK |     Match 75     |
+  76 11:25:00 | BWS : DSF : TWG : MFG | HSO : QMC : PAS : HZW |     Match 76     |
+  77 11:30:00 | HYP : BGS : GRS : HZW | LFG : DSF : TWG : PAG |     Match 77     |
+  78 11:35:00 | BAY : BRK : KDE : JMS | GRS : CCR : STA : CPR |     Match 78     |
+  79 11:40:00 | CLY : DSF : CPR : QEH | PAS : JMS : GRS : GRD |     Match 79     |
+  80 11:45:00 | BRN : KES : PAG : HSO | QEH : MFG : STA : TTN |     Match 80     |
+  81 11:50:00 | NHS : TTN : PAG : BRN | EMM : CLF : CGS : SCC |     Match 81     |
+  82 11:55:00 | NHS : TTN : QMC : HYP | CLY : BGS : PAS : PSC |     Match 82     |
+  83 12:00:00 | NHS : BPV : GRS : RUN | QMC : RWD : TTN : WYC |     Match 83     |
+  84 12:05:00 | QMS : CLF : GYG : ICE | CPR : HRS : BRK : RED |     Match 84     |
+  85 12:10:00 | SWI : BGS : HYP : BDF | SCC : EMM : SEN : DSF |     Match 85     |
+  86 12:15:00 | PSC : SCC : HSO : CLY | QMS : BAY : MAI2: DSF |     Match 86     |
+  87 13:15:00 | TWG : SGS : PAS : BRK | LFG : KHS : BPV : HZW |     Match 87     |
+  88 13:20:00 | SEN : LSS : RUN : GYG | CLY : LFG : RGS : MEA |     Match 88     |
+  89 13:25:00 | QEH : GRS : GRD : DSF | RGS : WYC : SWI : NHS |     Match 89     |
+  90 13:30:00 | TWG : SWI : HZW : PAS | BRN : CPR : CLF : BWS |     Match 90     |
+  91 13:35:00 | WYC : CRB : KES : BDF | SEN : RGS : QEH : STA |     Match 91     |
+  92 13:40:00 | QEH : MAI2: PSC : TTN | CLY : CCR : HRS : NHS |     Match 92     |
+  93 13:45:00 | BRK : GRD : EMM : SEN | CLY : RWD : JMS : TBG |     Match 93     |
+  94 13:50:00 | RWD : WYC : SGS : HRS | TTN : RED : TBG : BPV |     Match 94     |
+  95 13:55:00 | MFG : JMS : GRS : BRN | BRK : CLF : QEH : KES |     Match 95     |
+  96 14:00:00 | PAS : QMS : SGS : SCC | HYP : RWD : PSC : RUN |     Match 96     |
+  97 14:05:00 | MAI2: RWD : BRN : ICE | CRB : CPR : KHS : SWI |     Match 97     |
+  98 14:10:00 | TBG : CLY : KHS : SEN | DSF : PAG : CLF : KDE |     Match 98     |
+  99 14:15:00 | SCC : HRS : SWI : KHS | HSO : GYG : BRN : RED |     Match 99     |
+ 100 14:20:00 | EMM : RWD : QEH : KHS | STA : CLF : BGS : BPV |    Match 100     |
+ 101 14:25:00 | PAS : PSC : QEH : NHS | CLF : JMS : BGS : KHS |    Match 101     |
+ 102 14:30:00 | CRB : ICE : MAI2: KES | KDE : DSF : SCC : RGS |    Match 102     |
+ 103 14:35:00 | EMM : ICE : QMS : CCR | LFG : HRS : TWG : PAG |    Match 103     |
+ 104 14:40:00 | CPR : MAI : BAY : TTN | PAS : TBG : SGS : CGS |    Match 104     |
+ 105 14:45:00 | RUN : EMM : GRS : SWI | BDF : CRB : MAI : MAI2|    Match 105     |
+ 106 14:50:00 | RGS : HSO : SCC : PAG | GRS : SGS : TWG : RED |    Match 106     |
+ 107 14:55:00 | BRN : NHS : CCR : TTN | MAI2: SEN : EMM : DSF |    Match 107     |
+ 108 15:00:00 | RWD : RGS : MAI2: BAY | EMM : MAI : CCR : HYP |    Match 108     |
+ 109 15:05:00 | RWD : PAS : CLF : SGS | PSC : BGS : PAG : SWI |    Match 109     |
+ 110 15:10:00 | MEA : BWS : SWI : ICE | GYG : CLY : KES : KHS |    Match 110     |
+ 111 15:30:00 | ??? : ??? : ??? : ??? |  -  : ??? : ??? : ??? |    Match 111     |
+ 112 15:35:00 | ??? : ??? : ??? : ??? | ??? : ??? : ??? :  -  |    Match 112     |
+ 113 15:40:00 | ??? : ??? : ??? : ??? | ??? : ??? : ??? :  -  |    Match 113     |
+ 114 15:45:00 | ??? : ??? :  -  : ??? | ??? :  -  : ??? : ??? |    Match 114     |
+ 115 15:50:00 | ??? :  -  : ??? : ??? |  -  : ??? : ??? : ??? |    Match 115     |
+ 116 15:55:00 |  -  : ??? : ??? : ??? | ??? : ??? : ??? : ??? |    Match 116     |
+ 117 16:00:00 |  -  : ??? : ??? : ??? | ??? : ??? : ??? :  -  |    Match 117     |
+ 118 16:05:00 |  -  : ??? : ??? : ??? | ??? : ??? : ??? : ??? |    Match 118     |
+ 119 16:15:00 | ??? : ??? : ??? : ??? | ??? : ??? : ??? : ??? |    Match 119     |
+ 120 16:20:00 | ??? : ??? : ??? : ??? | ??? : ??? : ??? : ??? |    Match 120     |
+ 121 16:25:00 | ??? : ??? : ??? : ??? | ??? : ??? : ??? : ??? |    Match 121     |
+ 122 16:30:00 | ??? : ??? : ??? : ??? | ??? : ??? : ??? : ??? |    Match 122     |
+ 123 16:40:00 | ??? : ??? : ??? : ??? |     :     :     :     | Quarter 1 (#123) |
+ 124 16:45:00 | ??? : ??? : ??? : ??? |     :     :     :     | Quarter 2 (#124) |
+ 125 16:50:00 | ??? : ??? : ??? : ??? |     :     :     :     | Quarter 3 (#125) |
+ 126 16:55:00 | ??? : ??? : ??? : ??? |     :     :     :     | Quarter 4 (#126) |
+ 127 17:05:00 | ??? : ??? : ??? : ??? |     :     :     :     |  Semi 1 (#127)   |
+ 128 17:10:00 | ??? : ??? : ??? : ??? |     :     :     :     |  Semi 2 (#128)   |
+ 129 17:25:00 | ??? : ??? : ??? : ??? |     :     :     :     |   Final (#129)   |

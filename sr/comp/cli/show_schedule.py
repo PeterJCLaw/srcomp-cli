@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import argparse
 import enum
+from datetime import timedelta
+from typing import TYPE_CHECKING
 
 DISPLAY_NAME_WIDTH = 18
+
+
+if TYPE_CHECKING:
+    from sr.comp.comp import SRComp
 
 
 class SecondsOption(enum.Enum):
@@ -15,6 +21,21 @@ class SecondsOption(enum.Enum):
         return self.value
 
 
+class TimesOption(enum.Enum):
+    SLOT = 'slot'
+    GAME = 'game'
+
+    def __str__(self) -> str:
+        return self.value
+
+    def start_time_offset(self, comp: SRComp) -> timedelta:
+        if self == self.SLOT:
+            return timedelta(0)
+        if self == self.GAME:
+            return comp.schedule.match_slot_lengths['pre']
+        raise ValueError(f"Unexpected member {self!r}")
+
+
 def first(iterable):
     return next(i for i in iterable)
 
@@ -24,6 +45,7 @@ def command(settings: argparse.Namespace) -> None:
     from datetime import datetime, timedelta
 
     from sr.comp.comp import SRComp
+    from sr.comp.match_period import Match
 
     comp = SRComp(os.path.realpath(settings.compstate))
 
@@ -32,6 +54,9 @@ def command(settings: argparse.Namespace) -> None:
     matches = comp.schedule.matches
     now = datetime.now(comp.timezone)
     current_matches = list(comp.schedule.matches_at(now))
+
+    times_option: TimesOption = settings.times
+    start_time_offset: timedelta = times_option.start_time_offset(comp)
 
     if not settings.all:
         time = now - timedelta(minutes=10)
@@ -50,6 +75,9 @@ def command(settings: argparse.Namespace) -> None:
     def print_col(text, last=False):
         print(text, end='|')
 
+    def start_time(match: Match) -> datetime:
+        return match.start_time + start_time_offset
+
     def should_show_seconds() -> bool:
         if settings.seconds == SecondsOption.ALWAYS:
             return True
@@ -59,7 +87,7 @@ def command(settings: argparse.Namespace) -> None:
         assert settings.seconds == SecondsOption.AUTO
         for slot in matches:
             for match in slot.values():
-                if match.start_time.second != 0:
+                if start_time(match).second != 0:
                     return True
 
         return False
@@ -82,7 +110,7 @@ def command(settings: argparse.Namespace) -> None:
     arena_ids = comp.arenas.keys()
     for slot in matches:
         m = first(slot.values())
-        print_col(f" {m.num:>3} {m.start_time:{time_format}} ")
+        print_col(f" {m.num:>3} {start_time(m):{time_format}} ")
 
         for a_id in arena_ids:
             if a_id in slot:
@@ -120,6 +148,19 @@ def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser
         choices=SecondsOption,
         type=SecondsOption,
         default=SecondsOption.AUTO,
+    )
+    parser.add_argument(
+        '--times',
+        help=(
+            "Whether to show 'slot' or 'game' start times. "
+            "Slot times are the full cycle spacing of the matches. "
+            "Game times are the point where the game timer begins. "
+            "These can be the same, but are usually different, according to the "
+            "value of the `match_slot_lengths.pre` key in the schedule file."
+        ),
+        choices=TimesOption,
+        type=TimesOption,
+        default=TimesOption.SLOT,
     )
     parser.add_argument(
         '--limit',
