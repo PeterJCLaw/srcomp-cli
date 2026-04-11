@@ -26,18 +26,22 @@ def _start_time(slot: MatchSlot) -> datetime.datetime:
 def command(settings: argparse.Namespace) -> None:
     from sr.comp.comp import SRComp
 
-    offset = datetime.timedelta(seconds=settings.offset_seconds)
     match_number: int = settings.match_number
 
     comp = SRComp(settings.compstate)
 
     slots = comp.schedule.matches[match_number:]
-
     # Yes, this doesn't account for the game not aligning within the slot.
     # Happily we don't need to account for that explicitly as it's a fixed
     # offset which affects all matches equally and thus drops out.
     start_time = _start_time(slots[0])
-    stream_start = start_time - offset
+
+    stream_start: datetime.datetime
+    if settings.offset_seconds:
+        offset = datetime.timedelta(seconds=settings.offset_seconds)
+        stream_start = start_time - offset
+    else:
+        stream_start = settings.start_time
 
     print(f"{format_time(datetime.timedelta())} Introduction")
 
@@ -72,6 +76,8 @@ def command(settings: argparse.Namespace) -> None:
 
 
 def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    from dateutil.parser import parse as parse_date
+
     help_msg = (
         "Determine the \"chapter\" timings for a Youtube livestream based "
         "on the match timings."
@@ -86,8 +92,9 @@ def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser
         help="Competition state repo",
         type=Path,
     )
-    parser.add_argument(
-        'offset_seconds',
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        '--offset-seconds',
         type=int,
         help=(
             "The offset from the start of the video at which the first match "
@@ -95,6 +102,11 @@ def add_subparser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser
             "URL at current time' and extract the value of the 't' argument from "
             "the query string."
         ),
+    )
+    group.add_argument(
+        '--start-time',
+        type=parse_date,
+        help="The wall clock start time at which the video itself starts.",
     )
     parser.add_argument(
         'match_number',

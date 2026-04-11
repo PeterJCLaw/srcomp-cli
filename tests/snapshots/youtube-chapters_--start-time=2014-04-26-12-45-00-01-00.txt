@@ -1,0 +1,148 @@
+0:00:00 Introduction
+0:15:00 Match 0: CLY vs TTN | GRS vs QMC
+0:20:00: Gap (0:01:00)
+0:21:00 Match 1: WYC vs QMS vs LSS vs EMM | BPV vs BDF vs NHS vs MEA
+0:26:00: Gap (0:01:00)
+0:27:00 Match 2: ICE vs MFG vs SWI vs BRN | TBG vs EMM vs SGS vs GYG
+0:32:00: Gap (0:01:15)
+0:33:15 Match 3: MAI2 vs HSO vs KDE vs CCR | SCC vs LSS vs HZW vs MAI
+0:38:15: Gap (0:01:00)
+0:39:15 Match 4: BRN vs RED vs NHS vs JMS | KHS vs BPV vs DSF vs HSO
+0:44:15: Gap (0:01:00)
+0:45:15 Match 5: BGS vs HRS vs BPV vs GRD | RGS vs CRB vs BRN vs TTN
+0:50:15: Gap (0:01:00)
+0:51:15 Match 6: MEA vs TTN vs GRD vs TBG | EMM vs CCR vs LSS vs CLF
+0:56:15: Gap (0:01:00)
+0:57:15 Match 7: CGS vs KHS vs CLF vs BRN | MFG vs RGS vs RED vs SWI
+1:02:15 Match 8: GYG vs JMS vs TWG vs KDE | ICE vs CGS vs SCC vs KES
+1:07:15 Match 9: TWG vs SEN vs LFG vs PSC | SGS vs BRK vs GYG vs RUN
+1:12:15 Match 10: SEN vs JMS vs LSS vs RGS | SCC vs DSF vs HRS vs KES
+1:17:15 Match 11: CRB vs KHS vs TBG vs SWI | WYC vs BAY vs LSS vs HYP
+1:22:15 Match 12: SGS vs LFG vs GRS vs MFG | HZW vs SCC vs BDF vs BPV
+1:27:15 Match 13: CGS vs NHS vs SCC vs BRN | PAG vs CPR vs HYP vs SGS
+1:32:15 Match 14: MFG vs MAI2 vs SEN vs GRS | CRB vs BPV vs DSF vs TBG
+1:37:15 Match 15: KES vs TTN vs JMS vs GYG | NHS vs SWI vs CLF vs SEN
+1:42:15 Match 16: QEH vs HRS vs MAI2 vs SCC | TWG vs SEN vs KHS vs PAG
+1:47:15 Match 17: SWI vs DSF vs STA vs ICE | TTN vs CPR vs JMS vs SGS
+1:52:15 Match 18: GRD vs SCC vs RUN vs MAI2 | QEH vs HZW vs BRN vs HYP
+1:57:15 Match 19: HSO vs LFG vs GRD vs BAY | HRS vs BRN vs MAI2 vs DSF
+2:02:15 Match 20: BGS vs GRD vs CPR vs BRN | SWI vs BRK vs HZW vs BPV
+2:07:15 Match 21: BPV vs QEH vs PAS vs NHS | BGS vs HYP vs GRD vs MAI
+2:12:15 Match 22: TWG vs BWS vs GYG vs DSF | STA vs HRS vs KDE vs ICE
+2:17:15 Match 23: KES vs TTN vs CPR vs PAS | KHS vs BRN vs BGS vs RWD
+2:22:15 Match 24: NHS vs MEA vs BWS vs CCR | QEH vs LFG vs KHS vs MAI2
+2:27:15 Match 25: TBG vs SGS vs BRK vs RWD | TTN vs CRB vs LFG vs CLY
+2:32:15 Match 26: LFG vs CLY vs PAS vs QEH | GRD vs RUN vs NHS vs HSO
+2:37:15 Match 27: GRD vs HRS vs TBG vs PAG | SEN vs HYP vs CLF vs CLY
+2:42:15 Match 28: CGS vs MAI vs KES vs BAY | RED vs BDF vs BRK vs CLY
+2:47:15 Match 29: MFG vs QMC vs HYP vs RWD | HSO vs RGS vs KDE vs BDF
+2:52:15 Match 30: PAG vs RGS vs BPV vs BRK | CLY vs SEN vs SCC vs EMM
+2:57:15 Match 31: QEH vs TTN vs CLY vs RWD | BDF vs HSO vs HRS vs ICE
+3:02:15 Match 32: SCC vs MFG vs SWI vs LFG | KHS vs TWG vs MAI vs SGS
+3:07:15 Match 33: KDE vs SEN vs BRN vs MAI2 | PAG vs GRS vs KHS vs LFG
+3:12:15 Match 34: CCR vs SGS vs QEH vs CLY | CGS vs CLF vs KHS vs HRS
+3:17:15 Match 35: KES vs PSC vs KDE vs HZW | CRB vs WYC vs RUN vs BGS
+3:22:15 Match 36: LFG vs WYC vs CGS vs STA | TWG vs CLY vs HRS vs GYG
+3:27:15 Match 37: PAG vs CGS vs GYG vs LSS | SWI vs EMM vs CRB vs PSC
+3:32:15 Match 38: CLF vs BWS vs GRD vs PSC | HRS vs KES vs BDF vs TBG
+3:37:15 Match 39: CGS vs MAI2 vs BRK vs BAY | RWD vs PSC vs RGS vs TBG
+3:42:15 Match 40: HSO vs LSS vs SCC vs DSF | RED vs SWI vs RUN vs PSC
+3:47:15 Match 41: GRD vs BRK vs QMS vs BAY | MFG vs SEN vs PSC vs BPV
+3:52:15 Match 42: KHS vs SEN vs MFG vs GYG | GRD vs ICE vs PSC vs KDE
+3:57:15 Match 43: RWD vs RED vs KHS vs RUN | PAS vs BDF vs BRK vs MAI
+4:02:15 Match 44: PAG vs SEN vs SGS vs QEH | MAI vs QMS vs BAY vs KES
+4:07:15 Match 45: LSS vs MAI vs PAS vs KHS | SEN vs MAI2 vs RUN vs PSC
+4:12:15 Match 46: WYC vs BAY vs NHS vs BPV | BGS vs MFG vs SEN vs LSS
+4:17:15 Match 47: TBG vs HZW vs BPV vs BRK | HSO vs DSF vs CGS vs CCR
+4:22:15 Match 48: BPV vs MAI vs WYC vs BGS | STA vs RGS vs KES vs SGS
+4:27:15 Match 49: HZW vs LSS vs SGS vs GRD | QEH vs CLY vs CLF vs QMS
+4:32:15 Match 50: QMS vs HZW vs BWS vs ICE | CGS vs HYP vs LFG vs MAI2
+4:37:15 Match 51: RUN vs KHS vs CLY vs NHS | KES vs QMS vs PAG vs PSC
+4:42:15 Match 52: CGS vs SWI vs LFG vs EMM | CLY vs GRD vs HSO vs TWG
+4:47:15: Gap (15:57:45)
+20:45:00 Match 53: MAI vs ICE vs MAI2 vs TWG | CRB vs HRS vs QMS vs GYG
+20:50:00 Match 54: CCR vs MEA vs HYP vs KHS | HRS vs SEN vs QMS vs BAY
+20:55:00 Match 55: MAI vs STA vs BRK vs SEN | KDE vs LSS vs CLY vs MFG
+21:00:00 Match 56: RWD vs HYP vs CGS vs MFG | HSO vs CLY vs WYC vs RUN
+21:05:00 Match 57: HRS vs EMM vs HZW vs KDE | CPR vs BWS vs QMS vs STA
+21:10:00 Match 58: PSC vs CPR vs KDE vs HSO | SWI vs GRS vs RED vs EMM
+21:15:00 Match 59: HYP vs DSF vs GRD vs BRK | SCC vs NHS vs SGS vs PAG
+21:20:00 Match 60: BDF vs DSF vs GRS vs SCC | BGS vs ICE vs PAG vs EMM
+21:25:00 Match 61: GYG vs BRN vs MEA vs CLF | BDF vs MFG vs GRS vs CLY
+21:30:00 Match 62: SCC vs PSC vs JMS vs BPV | LFG vs MAI vs BRK vs HYP
+21:35:00 Match 63: JMS vs RWD vs MAI vs EMM | TBG vs RED vs SCC vs TWG
+21:40:00 Match 64: TBG vs BRK vs RUN vs GRD | CLY vs PSC vs QEH vs RWD
+21:45:00 Match 65: CLF vs KHS vs WYC vs KES | GRS vs QEH vs RUN vs TTN
+21:50:00 Match 66: PSC vs SCC vs STA vs DSF | NHS vs EMM vs MAI2 vs GRS
+21:55:00 Match 67: BRN vs SWI vs CPR vs LSS | MEA vs LFG vs QMS vs STA
+22:00:00 Match 68: RWD vs MAI2 vs BRK vs HRS | CLY vs MFG vs NHS vs TTN
+22:05:00 Match 69: BPV vs TTN vs HZW vs STA | CGS vs LSS vs RUN vs KHS
+22:10:00 Match 70: TTN vs CLF vs BAY vs STA | KDE vs CRB vs SCC vs QEH
+22:15:00 Match 71: HRS vs BAY vs KES vs HZW | SCC vs BRN vs LSS vs CGS
+22:20:00 Match 72: QMS vs CPR vs PSC vs LFG | BPV vs TWG vs CLY vs MAI
+22:25:00 Match 73: GRD vs MEA vs DSF vs ICE | KDE vs PAS vs CCR vs HSO
+22:30:00 Match 74: HZW vs EMM vs CGS vs BWS | PSC vs STA vs QMS vs BAY
+22:35:00 Match 75: QEH vs CRB vs CPR vs GYG | TTN vs KDE vs BAY vs BRK
+22:40:00 Match 76: BWS vs DSF vs TWG vs MFG | HSO vs QMC vs PAS vs HZW
+22:45:00 Match 77: HYP vs BGS vs GRS vs HZW | LFG vs DSF vs TWG vs PAG
+22:50:00 Match 78: BAY vs BRK vs KDE vs JMS | GRS vs CCR vs STA vs CPR
+22:55:00 Match 79: CLY vs DSF vs CPR vs QEH | PAS vs JMS vs GRS vs GRD
+23:00:00 Match 80: BRN vs KES vs PAG vs HSO | QEH vs MFG vs STA vs TTN
+23:05:00 Match 81: NHS vs TTN vs PAG vs BRN | EMM vs CLF vs CGS vs SCC
+23:10:00 Match 82: NHS vs TTN vs QMC vs HYP | CLY vs BGS vs PAS vs PSC
+23:15:00 Match 83: NHS vs BPV vs GRS vs RUN | QMC vs RWD vs TTN vs WYC
+23:20:00 Match 84: QMS vs CLF vs GYG vs ICE | CPR vs HRS vs BRK vs RED
+23:25:00 Match 85: SWI vs BGS vs HYP vs BDF | SCC vs EMM vs SEN vs DSF
+23:30:00 Match 86: PSC vs SCC vs HSO vs CLY | QMS vs BAY vs MAI2 vs DSF
+23:35:00: Gap (0:55:00)
+24:30:00 Match 87: TWG vs SGS vs PAS vs BRK | LFG vs KHS vs BPV vs HZW
+24:35:00 Match 88: SEN vs LSS vs RUN vs GYG | CLY vs LFG vs RGS vs MEA
+24:40:00 Match 89: QEH vs GRS vs GRD vs DSF | RGS vs WYC vs SWI vs NHS
+24:45:00 Match 90: TWG vs SWI vs HZW vs PAS | BRN vs CPR vs CLF vs BWS
+24:50:00 Match 91: WYC vs CRB vs KES vs BDF | SEN vs RGS vs QEH vs STA
+24:55:00 Match 92: QEH vs MAI2 vs PSC vs TTN | CLY vs CCR vs HRS vs NHS
+25:00:00 Match 93: BRK vs GRD vs EMM vs SEN | CLY vs RWD vs JMS vs TBG
+25:05:00 Match 94: RWD vs WYC vs SGS vs HRS | TTN vs RED vs TBG vs BPV
+25:10:00 Match 95: MFG vs JMS vs GRS vs BRN | BRK vs CLF vs QEH vs KES
+25:15:00 Match 96: PAS vs QMS vs SGS vs SCC | HYP vs RWD vs PSC vs RUN
+25:20:00 Match 97: MAI2 vs RWD vs BRN vs ICE | CRB vs CPR vs KHS vs SWI
+25:25:00 Match 98: TBG vs CLY vs KHS vs SEN | DSF vs PAG vs CLF vs KDE
+25:30:00 Match 99: SCC vs HRS vs SWI vs KHS | HSO vs GYG vs BRN vs RED
+25:35:00 Match 100: EMM vs RWD vs QEH vs KHS | STA vs CLF vs BGS vs BPV
+25:40:00 Match 101: PAS vs PSC vs QEH vs NHS | CLF vs JMS vs BGS vs KHS
+25:45:00 Match 102: CRB vs ICE vs MAI2 vs KES | KDE vs DSF vs SCC vs RGS
+25:50:00 Match 103: EMM vs ICE vs QMS vs CCR | LFG vs HRS vs TWG vs PAG
+25:55:00 Match 104: CPR vs MAI vs BAY vs TTN | PAS vs TBG vs SGS vs CGS
+26:00:00 Match 105: RUN vs EMM vs GRS vs SWI | BDF vs CRB vs MAI vs MAI2
+26:05:00 Match 106: RGS vs HSO vs SCC vs PAG | GRS vs SGS vs TWG vs RED
+26:10:00 Match 107: BRN vs NHS vs CCR vs TTN | MAI2 vs SEN vs EMM vs DSF
+26:15:00 Match 108: RWD vs RGS vs MAI2 vs BAY | EMM vs MAI vs CCR vs HYP
+26:20:00 Match 109: RWD vs PAS vs CLF vs SGS | PSC vs BGS vs PAG vs SWI
+26:25:00 Match 110: MEA vs BWS vs SWI vs ICE | GYG vs CLY vs KES vs KHS
+26:30:00: Gap (0:15:00)
+26:45:00 Match 111: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ???
+26:50:00 Match 112: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ???
+26:55:00 Match 113: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ???
+27:00:00 Match 114: ??? vs ??? vs ??? | ??? vs ??? vs ???
+27:05:00 Match 115: ??? vs ??? vs ??? | ??? vs ??? vs ???
+27:10:00 Match 116: ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:15:00 Match 117: ??? vs ??? vs ??? | ??? vs ??? vs ???
+27:20:00 Match 118: ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:25:00: Gap (0:05:00)
+27:30:00 Match 119: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:35:00 Match 120: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:40:00 Match 121: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:45:00 Match 122: ??? vs ??? vs ??? vs ??? | ??? vs ??? vs ??? vs ???
+27:50:00: Gap (0:05:00)
+27:55:00 Quarter 1 (#123): ??? vs ??? vs ??? vs ???
+28:00:00 Quarter 2 (#124): ??? vs ??? vs ??? vs ???
+28:05:00 Quarter 3 (#125): ??? vs ??? vs ??? vs ???
+28:10:00 Quarter 4 (#126): ??? vs ??? vs ??? vs ???
+28:15:00: Gap (0:05:00)
+28:20:00 Semi 1 (#127): ??? vs ??? vs ??? vs ???
+28:25:00 Semi 2 (#128): ??? vs ??? vs ??? vs ???
+28:30:00: Gap (0:10:00)
+28:40:00 Final (#129): ??? vs ??? vs ??? vs ???
+28:45:00: After matches (Note: add details here)
+Note: review to remove small gaps!
+Note: also add the outtro/wrapup!
