@@ -101,15 +101,15 @@ class UserInteractions(Generic[T], abc.ABC):
             if default:
                 return default
 
-    def query_bool(self, question: str, default_val: bool | None = None) -> bool:
+    def query_bool(self, question: str, default: bool | None = None) -> bool:
         options = ('y', 'n')
-        if default_val is True:
-            default: str | None = 'y'
-        elif default_val is False:
-            default = 'n'
+        if default is True:
+            default_str: str | None = 'y'
+        elif default is False:
+            default_str = 'n'
         else:
-            default = None
-        return self.query(question, options, default) == 'y'
+            default_str = None
+        return self.query(question, options, default_str) == 'y'
 
     @contextlib.contextmanager
     def make_fatal(
