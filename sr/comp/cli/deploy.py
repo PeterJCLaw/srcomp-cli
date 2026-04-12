@@ -44,6 +44,10 @@ API_TIMEOUT_SECONDS = 3
 DEPLOY_USER = 'srcomp'
 
 
+class UnableToGetStateError(RuntimeError):
+    pass
+
+
 @contextmanager
 def guard_unicode_output(stream: TextIO) -> Iterator[None]:
     """
@@ -145,22 +149,32 @@ def get_deployments(compstate: RawCompstate, interactions: UserInteractions[T]) 
         return compstate.deployments
 
 
-def get_current_state(host: str, interactions: UserInteractions[T]) -> str | None:
+def get_current_state(host: str, interactions: UserInteractions[T]) -> str:
+    """
+    Determine the currently-deployed state on the given host via its HTTP API.
+
+    In the case of errors, a suitable error will be emitted via the given
+    ``interactions`` and ``UnableToGetStateError`` will be raised.
+    """
     import requests
 
     url = f'http://{host}/comp-api/state'
+
     try:
         response = requests.get(url, timeout=API_TIMEOUT_SECONDS)
         response.raise_for_status()
         raw_state = response.json()
-    except Exception as e:
-        # TODO(PR): Should this just raise and be handled in the level above?
+    except requests.RequestException as e:
         interactions.show_info(str(e))
-        return None
-    else:
+        raise UnableToGetStateError from e
+
+    try:
         # While this could be any JSON, the schema is that this is a string
         # containing the commit hash of the compstate.
         return cast(str, raw_state['state'])
+    except KeyError as e:
+        interactions.show_info(str(e))
+        raise UnableToGetStateError from e
 
 
 def check_host_state(
@@ -183,8 +197,10 @@ def check_host_state(
         interactions.show_info(
             f"Checking host state for {host} (timeout {API_TIMEOUT_SECONDS} seconds).",
         )
-    state = get_current_state(host, interactions)
-    if not state:
+
+    try:
+        state = get_current_state(host, interactions)
+    except UnableToGetStateError:
         if interactions.query_bool(
             f"Failed to get state for {host}, cannot advise about history. Deploy anyway?",
             True,

@@ -16,6 +16,7 @@ def command(args: argparse.Namespace) -> None:
         get_current_state,
         get_deployments,
         ref_compstate,
+        UnableToGetStateError,
     )
     from sr.comp.cli.interaction_utils import BOLD, CLIInteractions, ENDC, FAIL
     from sr.comp.raw_compstate import RawCompstate
@@ -33,12 +34,13 @@ def command(args: argparse.Namespace) -> None:
         print(f"Fetching {host}... {BOLD}{FAIL}", end="")
         sys.stdout.flush()
 
-        # In case of error `get_current_state` prints the error and returns `None`.
-        state = get_current_state(host, interactions)
-        print(ENDC, end='')
-        sys.stdout.flush()
-        if not state:
+        try:
+            state = get_current_state(host, interactions)
+        except UnableToGetStateError:
             continue
+        finally:
+            print(ENDC, end='')
+            sys.stdout.flush()
 
         compstate.fetch(ref_compstate(host), [state], quiet=True)
         print(f"{state} fetched.")
