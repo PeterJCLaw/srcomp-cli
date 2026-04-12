@@ -21,6 +21,8 @@ import argparse
 import sys
 from typing import Callable, TYPE_CHECKING
 
+from sr.comp.cli.interaction_utils import CLIInteractions
+
 if TYPE_CHECKING:
     from sr.comp.match_period import Match
 
@@ -77,9 +79,8 @@ def command(args: argparse.Namespace) -> None:
 
     from sr.comp.comp import SRComp
 
-    from .deploy import print_fail
-
     compstate = SRComp(args.compstate)
+    interactions = CLIInteractions()
 
     if args.arena:
         if args.arena not in compstate.arenas:
@@ -101,7 +102,7 @@ def command(args: argparse.Namespace) -> None:
                 subprocess.check_call(command)
 
     except subprocess.CalledProcessError as e:
-        print_fail(str(e))
+        interactions.show_error(str(e))
         exit(1)
 
 
