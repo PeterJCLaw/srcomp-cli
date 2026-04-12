@@ -63,8 +63,10 @@ class UserInteractions(Generic[T], abc.ABC):
         options: Sequence[str],
         default: str | None = None,
     ) -> str:
-        if default:
-            assert default in options
+        if default and default not in options:
+            raise ValueError(
+                f"Default value {default!r} not an available option (options: {options!r})",
+            )
 
         options = [o.upper() if o == default else o.lower() for o in options]
         assert len(set(options)) == len(options)
