@@ -181,7 +181,7 @@ def command(settings: argparse.Namespace) -> None:
     # Show all but the final (which has no real meaning).
     # TODO: handle there being a tiebreaker.
     for round_info in results[:-1]:
-        print(f"## Teams not longer present after {round_info.name}")
+        print(f"## Teams no longer present after {round_info.name}")
         print()
         if round_info.teams_dropped_out:
             print("-- Teams dropping out (of their own accord)")
