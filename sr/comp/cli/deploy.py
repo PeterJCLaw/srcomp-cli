@@ -29,7 +29,11 @@ import warnings
 from contextlib import contextmanager
 from typing import cast, Iterable, Iterator, TextIO, TYPE_CHECKING, TypeVar
 
-from .deploy_api import CLIInteractions, UserInteractions
+from .interaction_utils import (
+    CLIInteractions,
+    FatalCommandError,
+    UserInteractions,
+)
 
 if TYPE_CHECKING:
     from sr.comp.raw_compstate import RawCompstate
@@ -38,35 +42,6 @@ T = TypeVar('T')
 
 API_TIMEOUT_SECONDS = 3
 DEPLOY_USER = 'srcomp'
-
-
-class FatalDeployError(RuntimeError):
-    """
-    Something went wrong which means that the deploy cannot continue.
-
-    This a marker exception and callsites should handle their own displaying of
-    a suitable error message. The message passed to this exception will not be
-    shown to the user and is intended for logging.
-    """
-
-    def __init__(self, log_message: str, exit_code: int = 1) -> None:
-        super().__init__(log_message, exit_code)
-        self.log_message = log_message
-        self.exit_code = exit_code
-
-
-@contextmanager
-def make_fatal(
-    interactions: UserInteractions[T],
-    msg: str = '{0}',
-    kind: type[Exception] = Exception,
-) -> Iterator[None]:
-    try:
-        yield
-    except kind as e:
-        msg = msg.format(e)
-        interactions.show_error(msg)
-        raise FatalDeployError(msg, exit_code=1) from e
 
 
 @contextmanager
@@ -110,7 +85,7 @@ def guard_unicode_output(stream: TextIO) -> Iterator[None]:
 
 def query_warn(msg: object, interactions: UserInteractions[T]) -> None:
     if not interactions.query_bool(f"Warning: {msg}. Continue?", False):
-        raise FatalDeployError(f"User rejected warning {msg}", exit_code=1)
+        raise FatalCommandError(f"User rejected warning {msg}", exit_code=1)
 
 
 def ref_compstate(host: str) -> str:
@@ -141,7 +116,7 @@ def deploy_to(
         # revision exists in the target, since this push will simply no-op
         # if it's already present
         revspec = '{0}:refs/heads/deploy-{0}'.format(revision)
-        with make_fatal(interactions, kind=RuntimeError):
+        with interactions.make_fatal(kind=RuntimeError):
             compstate.push(
                 url,
                 revspec,
@@ -166,7 +141,7 @@ def deploy_to(
 
 
 def get_deployments(compstate: RawCompstate, interactions: UserInteractions[T]) -> list[str]:
-    with make_fatal(interactions, "Failed to get deployments from state ({0})."):
+    with interactions.make_fatal("Failed to get deployments from state ({0})."):
         return compstate.deployments
 
 
@@ -260,13 +235,13 @@ def require_no_changes(compstate: RawCompstate, interactions: UserInteractions[T
         interactions.show_info(
             compstate.git(['status'], return_output=True),
         )
-        raise FatalDeployError("Unexpected state changes present", exit_code=1)
+        raise FatalCommandError("Unexpected state changes present", exit_code=1)
 
 
 def require_valid(compstate: RawCompstate, interactions: UserInteractions[T]) -> None:
     from sr.comp.validation import validate
 
-    with make_fatal(interactions, "State cannot be loaded: {0}"):
+    with interactions.make_fatal("State cannot be loaded: {0}"):
         comp = compstate.load()
 
     num_errors = validate(comp)
@@ -293,7 +268,7 @@ def run_deployments(
             # TODO: work out if it makes sense to try to rollback here?
             message = f"Failed to deploy to '{host}' (exit status: {retcode})."
             interactions.show_error(message)
-            raise FatalDeployError(message, exit_code=retcode)
+            raise FatalCommandError(message, exit_code=retcode)
 
     interactions.show_strong_ok("Done")
 
@@ -313,7 +288,7 @@ def command(args: argparse.Namespace) -> None:
 
             run_deployments(args, compstate, hosts, interactions)
 
-        except FatalDeployError as e:
+        except FatalCommandError as e:
             # Callsites are responsible for showing the user a useful message.
             exit(e.exit_code)
 

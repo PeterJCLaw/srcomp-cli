@@ -1,7 +1,8 @@
 import abc
+import contextlib
 import io
 import textwrap
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import Generic, TypeVar
 
 T = TypeVar('T')
@@ -11,6 +12,21 @@ BOLD = '\033[1m'
 FAIL = '\033[91m'
 OKBLUE = '\033[94m'
 ENDC = '\033[0m'
+
+
+class FatalCommandError(RuntimeError):
+    """
+    Something went wrong which means that the command cannot continue.
+
+    This a marker exception and callsites should handle their own displaying of
+    a suitable error message. The message passed to this exception will not be
+    shown to the user and is intended for logging.
+    """
+
+    def __init__(self, log_message: str, exit_code: int = 1) -> None:
+        super().__init__(log_message, exit_code)
+        self.log_message = log_message
+        self.exit_code = exit_code
 
 
 class UserInteractions(Generic[T], abc.ABC):
@@ -94,6 +110,19 @@ class UserInteractions(Generic[T], abc.ABC):
         else:
             default = None
         return self.query(question, options, default) == 'y'
+
+    @contextlib.contextmanager
+    def make_fatal(
+        self,
+        msg: str = '{0}',
+        kind: type[Exception] = Exception,
+    ) -> Iterator[None]:
+        try:
+            yield
+        except kind as e:
+            msg = msg.format(e)
+            self.show_error(msg)
+            raise FatalCommandError(msg, exit_code=1) from e
 
 
 class CLIInteractions(UserInteractions[str]):
