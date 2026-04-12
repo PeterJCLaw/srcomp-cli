@@ -180,7 +180,9 @@ def check_host_state(
     SKIP = True
     UPDATE = False
     if verbose:
-        interactions.show_info(f"Checking host state for {host} (timeout {API_TIMEOUT_SECONDS} seconds).")
+        interactions.show_info(
+            f"Checking host state for {host} (timeout {API_TIMEOUT_SECONDS} seconds).",
+        )
     state = get_current_state(host, interactions)
     if not state:
         if interactions.query_bool(
@@ -201,26 +203,38 @@ def check_host_state(
 
     # Check for unknown commit
     if not compstate.has_commit(state):
-        if interactions.query_bool(f"Host {host} has unknown state '{state}'. Try to fetch it?", True):
+        if interactions.query_bool(
+            f"Host {host} has unknown state '{state}'. Try to fetch it?",
+            default=True,
+        ):
             compstate.fetch('origin', quiet=True)
             compstate.fetch(ref_compstate(host), ('HEAD', state), quiet=True)
 
     # Old revision:
     if compstate.has_descendant(state):
-        if interactions.query_bool(f"Host {host} has more recent state '{state}'. Deploy anyway?", True):
+        if interactions.query_bool(
+            f"Host {host} has more recent state '{state}'. Deploy anyway?",
+            default=True,
+        ):
             return UPDATE
         else:
             return SKIP
 
     # Some other revision:
     if compstate.has_commit(state):
-        if interactions.query_bool(f"Host {host} has sibling state '{state}'. Deploy anyway?", True):
+        if interactions.query_bool(
+            f"Host {host} has sibling state '{state}'. Deploy anyway?",
+            default=True,
+        ):
             return UPDATE
         else:
             return SKIP
 
     # An unknown state
-    if interactions.query_bool(f"Host {host} has unknown state '{state}'. Deploy anyway?", True):
+    if interactions.query_bool(
+        f"Host {host} has unknown state '{state}'. Deploy anyway?",
+        default=True,
+    ):
         return UPDATE
     else:
         return SKIP
