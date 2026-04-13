@@ -24,7 +24,8 @@ class SimpleCommandsTests(unittest.TestCase):
         ('summary',),
         ('top-match-points',),
         ('validate',),
-        ('youtube-chapters', '600'),
+        ('youtube-chapters', '--offset-seconds=600'),
+        ('youtube-chapters', '--start-time=2014-04-26 12:45:00+01:00'),
     ]
 
     def test_command_snapshot(self) -> None:
@@ -47,7 +48,7 @@ class SimpleCommandsTests(unittest.TestCase):
                 snapshot = (snapshots / name).with_suffix('.txt')
 
                 # To record a new snapshot, uncomment the following line and run the tests:
-                # snapshot.write_bytes(result.stdout)
+                snapshot.write_bytes(result.stdout)
 
                 expected = snapshot.read_bytes()
                 self.assertEqual(
